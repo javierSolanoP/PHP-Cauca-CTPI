@@ -5,7 +5,7 @@
       <sidebar-link to="/addppersonal">
         <i class="tim-icons icon-lock-circle"></i>
         <template>
-          <p>Agregar Servicio</p>
+          <p>Gestion</p>
         </template>
       </sidebar-link>
       

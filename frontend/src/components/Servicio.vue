@@ -16,7 +16,7 @@
               <div class="card">
                 <div class="card-body">
                   <form class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                       <label for="">Servicio</label>
                       <select  class="form-select"
                         aria-label="Default select example"
@@ -25,7 +25,7 @@
                         <option value="2">Urgencias</option>
                       </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                       <label for="">Especialidad</label>
                       <select
                         class="form-select"
@@ -35,18 +35,6 @@
                         <option value="2">pediatra</option>
                       </select>
                     </div>
-                    
-                    <div class="form-group col-md-2 text-center ">
-                      <button class="btn btn-info agregar my-3">Agregar</button>
-                    </div>
-
-                    <div class="form-group col-md-2 text-center ">
-                      <div >
-                      <div > Aforo</div>
-                      <h1>2</h1>
-                      </div>
-                    </div>
-                    
                   </form>
                 </div>
               </div>

@@ -6,6 +6,7 @@ import UserProfile from "@/pages/UserProfile.vue";
 import Profesion from "@/pages/Profesion.vue";
 import Especialidades from "@/pages/Especialidades.vue";
 import Servicios from "@/pages/Servicios.vue";
+import AsignarServicio from "@/pages/AsignarServicio.vue";
 
 
 
@@ -16,7 +17,7 @@ const routes = [{
   children:[
     {
       path: "addppersonal",
-      name: " Agregar Servicio",
+      name: " Gestion",
       component: Addppersonal
     },
     {
@@ -51,6 +52,11 @@ const routes = [{
       path: "historial",
       name: "Historial",
       component: Historial
+    },
+    {
+      path: "asignarServicio",
+      name: "Asignar Servicio",
+      component: AsignarServicio
     }
   ]
 

@@ -64,16 +64,7 @@
                           <button class="btn btn-info agregar">Asignar</button>
                         </td>
                       </tr>
-                      <tr class="">
-                        <td>Id</td>
-                        <td>darly</td>
-                        <td>1002965382</td>
-                        <td>Urgencias</td>
-                        <td>Paramedico</td>
-                        <td>
-                          <button class="btn btn-info agregar">Asignar</button>
-                        </td>
-                      </tr>
+                      
                       
                     </tbody> 
                   </table>

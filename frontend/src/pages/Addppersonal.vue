@@ -20,7 +20,67 @@
       </div>
     </div>
 
-   <Servicio/>
+  <section class="content">
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <card class="card">
+          <div class="card-header">
+          <h4 slot="header" class="card-title mb-4">
+            <template> </template>
+          </h4>
+          </div>
+          
+
+          <section class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-body">
+                  <form class="row">
+                    <div class="form-group col-md-4">
+                      <label for="">Servicio</label>
+                      <select  class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option value="1">---seleccione---</option>
+                        <option value="2">Urgencias</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="">Especialidad</label>
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option value="1">---seleccione---</option>
+                        <option value="2">pediatra</option>
+                      </select>
+                    </div>
+                    
+                    <div class="form-group col-md-2 text-center ">
+                      <router-link class="btn btn-info agregar my-3" to="/asignarServicio">Agregar</router-link>
+                    </div>
+
+                    <div class="form-group col-md-2 text-center ">
+                      <div >
+                      <div > Aforo</div>
+                      <h1>2</h1>
+                      </div>
+                    </div>
+                    
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          
+
+          <!-- <button class="btn btn-info agregar">Agregar</button> -->
+        </card>
+      </div>
+    </div>
+  </section>
 
     <div class="row">
       <div class="col-lg-12 col-md-12">
@@ -91,7 +151,7 @@
 
 <script>
 import {Card} from "@/components/index";
-import Servicio from '../components/Servicio.vue';
+
 
 
 
@@ -99,7 +159,7 @@ import Servicio from '../components/Servicio.vue';
 export default {
   components:{
     Card,
-    Servicio
+
   },
 }
 </script>
