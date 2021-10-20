@@ -20,7 +20,8 @@ class CreateProfessionalsTable extends Migration
             $table->string('last_name', 100);
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
+            $table->string('session');
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id_role')->on('roles')->onDelete('cascade');
             $table->timestamps();

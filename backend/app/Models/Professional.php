@@ -16,6 +16,7 @@ class Professional extends Model
         'email',
         'password',
         'avatar',
+        'session',
         'role_id'
     ];
 

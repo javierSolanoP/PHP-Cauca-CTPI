@@ -13,6 +13,7 @@ trait MethodService {
         $validate = new Validate;
 
         // Declaramos el arreglo 'valid'. Para almacenar las propieadades validadas: 
+        $valid = [];
 
         if(isset($_SESSION['validate'])){
 
