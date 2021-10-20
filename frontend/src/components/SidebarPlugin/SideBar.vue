@@ -58,9 +58,9 @@ export default {
 }
 
 img{
-  margin: 0px 70px;
-  width: 75px;
-  height: 70px;
+  margin: 0px 62px;
+  width: 80px;
+  height:75px;
   border-radius:40px ;
 }
 </style>

@@ -5,61 +5,41 @@
     </template>
     <div class="row">
       <div class="col-md-5 pr-md-1 text-left">
-        <input label="City"
-        class="form-control mb-3"
-                  
-                  placeholder="City">
+        <input class="form-control mb-3">
       </div>
       <div class="col-md-3 px-md-1 text-left">
-        <input label="City"
-        class="form-control mb-3"
-                  
-                  placeholder="City">
+        <input class="form-control mb-3">
       </div>
       <div class="col-md-4 pl-md-1 text-left">
-        <input label="City"
-        class="form-control mb-3"
-                  
-                  placeholder="City">
+        <input class="form-control mb-3">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6 pr-md-1 text-left">
-        <input label="City"
-        class="form-control mb-3"
-                  
-                  placeholder="City">
+        <input label="City" class="form-control mb-3">
       </div>
       <div class="col-md-6 pl-md-1 text-left">
-        <input label="City"
-        class="form-control mb-3"
-                 
-                  placeholder="City">
+        <input class="form-control mb-3">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12 text-left">
         <input label="City"
-        class="form-control mb-3"
-                  
-                  placeholder="City">
+        class="form-control mb-3">
       </div>
     </div>
 
 
     <div class="row">
       <div class="col-md-4 pr-md-1 text-left">
-        <input label="City"
-        class="form-control"
-                  
-                  placeholder="City">
+        <input class="form-control">
       </div>
     </div>
     
     <template slot="footer">
-      <button  class="btn btn-info" type="success" fill>Guardar</button>
+          <button class="btn btn-info agregar">Asignar</button>
     </template>
   </card>
 </template>
