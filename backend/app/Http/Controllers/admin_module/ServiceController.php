@@ -14,13 +14,10 @@ class ServiceController extends Controller
     public function index()
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = Service::select('id_service as id', 'service_name', 'personal_amount', 'number_of_days', 'hourlyintensity');
-
-        // Validamos que exista el registro en la tabla de la DB:
-        $validateService = $model->get();
+        $model = Service::select('service_name', 'personal_amount', 'number_of_days', 'hourlyintensity')->get();
 
         // Validamos que existan registros en la tabla de la DB:
-        if(count($validateService) != 0){
+        if(count($model) != 0){
 
             // Retornamos la respuesta:
             return response(content: ['query' => true, 'services' => $model], status: 200);
