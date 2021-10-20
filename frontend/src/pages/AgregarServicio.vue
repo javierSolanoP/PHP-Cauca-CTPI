@@ -8,11 +8,11 @@
               <div class="col-sm-6">
                 
                 <template>
-                  <h5 class="card-category">Turnos</h5>
+                  <h5 class="card-category">Servicios</h5>
                 </template>
 
                 <template>
-                  <h2 class="card-title">Programar Turnos</h2>
+                  <h2 class="card-title">Agregar Servicio</h2>
                 </template>
               </div>
             </div>
@@ -112,6 +112,10 @@ export default {
 
       .then(data => {
 
+        console.log(data);
+        
+        if(data.status === 201){
+
         this.$swal({
           position:"top-end",
           title:"se guardó correctamente!!",
@@ -120,8 +124,11 @@ export default {
           toast:"true",
         });
         this.$router.push('/servicios')
-        console.log(data);
         
+
+        }else{
+          
+        }
       });
       
       

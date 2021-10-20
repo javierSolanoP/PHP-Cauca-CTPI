@@ -42,6 +42,7 @@
                         <th>Cantidad de personal</th>
                         <th>Numero de Dias</th>
                         <th>Horas</th>
+                        <th></th>
                     
                         
                       </tr>
@@ -56,6 +57,9 @@
                         <td>{{servicios.personal_amount}}</td>
                         <td>{{servicios.number_of_days}}</td>
                         <td>{{servicios.hourlyintensity}}</td>
+                        <td>
+                          <button class="btn btn-info agregar"> editar</button>
+                        </td>
                       </tr>
 
                     </tbody> 
