@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHistoryTimesTable extends Migration
+class CreateAssigmentTimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateHistoryTimesTable extends Migration
      */
     public function up()
     {
-        Schema::create('history_times', function (Blueprint $table) {
+        Schema::create('assigment_times', function (Blueprint $table) {
             $table->id('id_history_time');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('time_speciality_id');
@@ -31,6 +31,6 @@ class CreateHistoryTimesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('history_times');
+        Schema::dropIfExists('assigment_times');
     }
 }

@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\HistoryTime;
+use App\Models\AssigmentTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class HistoryTimeFactory extends Factory
+class AssigmentTimeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = HistoryTime::class;
+    protected $model = AssigmentTime::class;
 
     /**
      * Define the model's default state.
