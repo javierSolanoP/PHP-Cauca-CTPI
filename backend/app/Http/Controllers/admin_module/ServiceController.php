@@ -7,7 +7,6 @@ use App\Http\Controllers\Require\Class\Service as ClassService;
 use App\Models\Service;
 use Exception;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr;
 
 class ServiceController extends Controller
 {
@@ -15,7 +14,7 @@ class ServiceController extends Controller
     public function index()
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = Service::select('service_name', 'personal_amount', 'number_of_days', 'hourlyintensity');
+        $model = Service::select('id_service as id', 'service_name', 'personal_amount', 'number_of_days', 'hourlyintensity');
 
         // Validamos que exista el registro en la tabla de la DB:
         $validateService = $model->get();
@@ -108,7 +107,7 @@ class ServiceController extends Controller
         $service_name = strtolower($service);
 
         // Realizamos la consulta a la tabla de la DB:
-        $model = Service::select('service_name', 'personal_amount', 'number_of_days', 'hourlyintensity')->where('service_name', $service_name);
+        $model = Service::select('id_service as id', 'service_name', 'personal_amount', 'number_of_days', 'hourlyintensity')->where('service_name', $service_name);
 
         // Validamos que exista el registro en la tabla de la DB:
         $validateService = $model->first();

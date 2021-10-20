@@ -76,7 +76,7 @@ class SpecialityController extends Controller
     public function show($speciality)
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = Speciality::select('speciality_name', 'description')->where('speciality_name', $speciality);
+        $model = Speciality::select('id_speciality as id', 'speciality_name', 'description')->where('speciality_name', $speciality);
 
         // Validamos que exista el registro en la tabla de la DB:
         $validateSpeciality = $model->first();
@@ -138,7 +138,7 @@ class SpecialityController extends Controller
     public function destroy($speciality)
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = Speciality::select('speciality_name', 'description')->where('speciality_name', $speciality);
+        $model = Speciality::select('id_speciality as id', 'speciality_name', 'description')->where('speciality_name', $speciality);
 
         // Validamos que exista el registro en la tabla de la DB:
         $validateSpeciality = $model->first();
