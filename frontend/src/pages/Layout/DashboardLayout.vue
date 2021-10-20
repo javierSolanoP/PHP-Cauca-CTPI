@@ -3,11 +3,12 @@
     <side-bar>
       
       <sidebar-link to="/addppersonal">
-        <i class="tim-icons icon-atom"></i>
+        <i class="tim-icons icon-lock-circle"></i>
         <template>
           <p>Agregar Servicio</p>
         </template>
       </sidebar-link>
+      
       
       <sidebar-link to="/dashboard">
         <i class="tim-icons icon-chart-pie-36"></i>
@@ -17,7 +18,12 @@
       </sidebar-link>
 
 
-
+      <sidebar-link to="/servicio">
+        <i class="tim-icons icon-atom"></i>
+        <template>
+          <p> Servicio</p>
+        </template>
+      </sidebar-link>
 
 
 
@@ -27,6 +33,7 @@
           <p>Historial</p>
         </template> 
       </sidebar-link> -->
+
 
       
     </side-bar>

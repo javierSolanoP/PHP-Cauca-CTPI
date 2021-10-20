@@ -50,10 +50,6 @@
               </div>
             </div>
           </section>
-
-
-
-
         </card>
       </div>
     </div>

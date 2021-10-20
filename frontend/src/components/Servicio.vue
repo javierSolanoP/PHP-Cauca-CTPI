@@ -36,8 +36,12 @@
                       </select>
                     </div>
                     
-                    <div class="form-group col-md-4 text-center ">
-                      <div class="circulo">
+                    <div class="form-group col-md-2 text-center ">
+                      <button class="btn btn-info agregar my-3">Agregar</button>
+                    </div>
+
+                    <div class="form-group col-md-2 text-center ">
+                      <div >
                       <div > Aforo</div>
                       <h1>2</h1>
                       </div>

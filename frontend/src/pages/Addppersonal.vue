@@ -29,9 +29,11 @@
           <section class="row">
             <div class="col">
               <div class="card">
-                <div class="card-body table-responsive-lg my-5">
+                
+                <div class="card-body table-responsive-lg">
+                    <h4 class="card-title my-4">Listado</h4>
                   <table class="table table-hover">
-                    <thead>
+                    <thead class="thead-dark">
                       <tr>
                         <th>Id</th>
                         <th>Nombres</th>
@@ -120,6 +122,10 @@ export default {
 } */
 .agregar{
   margin: 0px 5px;
+}
+
+th{
+  color: aliceblue  !important;
 }
 </style>
 

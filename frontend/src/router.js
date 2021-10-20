@@ -4,6 +4,7 @@ import Historial from "@/pages/Historial.vue";
 import Addppersonal from "@/pages/Addppersonal.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import Profesion from "@/pages/Profesion.vue";
+import Servicio from "@/pages/Servicio.vue";
 
 
 
@@ -13,20 +14,21 @@ const routes = [{
   redirect: "dashboard",
   children:[
     {
+      path: "addppersonal",
+      name: " Agregar Servicio",
+      component: Addppersonal
+    },
+    {
       path: "dashboard",
       name: "Programar Turno",
       component: Dashboard
     },
     {
-      path: "historial",
-      name: "Historial",
-      component: Historial
+      path: "servicio",
+      name: "Servicio",
+      component: Servicio
     },
-    {
-      path: "addppersonal",
-      name: " Agregar Personal",
-      component: Addppersonal
-    },
+    
     {
       path: "user",
       name: "Perfil de Usuario",
@@ -37,6 +39,11 @@ const routes = [{
       path: "profesion",
       name: "Profesion",
       component: Profesion
+    },
+    {
+      path: "historial",
+      name: "Historial",
+      component: Historial
     }
   ]
 

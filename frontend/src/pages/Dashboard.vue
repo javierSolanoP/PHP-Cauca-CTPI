@@ -31,7 +31,7 @@
               <div class="card">
                 <div class="card-body table-responsive-lg my-5">
                   <table class="table table-hover">
-                    <thead>
+                    <thead class="thead-dark">
                       <tr>
                         <th>Id</th>
                         <th>Nombres</th>
@@ -53,10 +53,28 @@
                           <button class="btn btn-info agregar">Asignar</button>
                         </td>
                       </tr>
+                      <tr class="">
+                        <td>Id</td>
+                        <td>darly</td>
+                        <td>1002965382</td>
+                        <td>Urgencias</td>
+                        <td>Paramedico</td>
+                        <td>
+                          <button class="btn btn-info agregar">Asignar</button>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <td>Id</td>
+                        <td>darly</td>
+                        <td>1002965382</td>
+                        <td>Urgencias</td>
+                        <td>Paramedico</td>
+                        <td>
+                          <button class="btn btn-info agregar">Asignar</button>
+                        </td>
+                      </tr>
                       
-                    </tbody>
-                    
-                    
+                    </tbody> 
                   </table>
                 </div>
               </div>
@@ -95,5 +113,9 @@ background:#11AAB8 !important;
 
 .agregar:hover{
   background-color: #11AAB8 !important;
+}
+
+th{
+  color: aliceblue  !important;
 }
 </style>
