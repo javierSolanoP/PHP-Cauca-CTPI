@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class AssigmentTimeSeeder extends Seeder
+class ServiceSpecialitySeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\TimeSpeciality;
+use App\Models\AssignmentTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TimeSpecialityFactory extends Factory
+class AssignmentTimeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = TimeSpeciality::class;
+    protected $model = AssignmentTime::class;
 
     /**
      * Define the model's default state.
