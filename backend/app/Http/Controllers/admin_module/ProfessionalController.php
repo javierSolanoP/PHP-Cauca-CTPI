@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_module;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Require\Class\Professional as ClassProfessional;
+use App\Http\Controllers\RoleController;
 use App\Models\Professional;
 use Exception;
 use Illuminate\Http\Request;
@@ -139,19 +140,43 @@ class ProfessionalController extends Controller
     }
 
     // Metodo para retornar un usuario especifico: 
-    public function show($email)
+    public function show($identification)
     {
         // Realizamos la consulta a la tabla de la DB:
         $model = DB::table('professionals')
 
                 // Filtramos el usuario requerido: 
-                ->where('email', $email)
+                ->where('identification', $identification)
 
                 // Realizamos la consulta a la tabla del modelo 'Role: 
                 ->join('roles', 'roles.id_role', '=', 'professionals.role_id')
 
                 // Seleccionamos los campos que se requiren: 
-                ->select('professionals.identification', 'professionals.name', 'professionals.last_name', 'professionals.email', 'professionals.session', 'roles.role_name as role');
+                ->select('professionals.id_professional as id', 'professionals.identification', 'professionals.name', 'professionals.last_name', 'professionals.email', 'professionals.session', 'roles.role_name as role');
+
+        // Validamos que exista el registro en la tabla de la DB:
+        $validateUser = $model->first();
+
+        // Si existe, retornamos el registro: 
+        if($validateUser){
+
+            // Retornamos la respuesta:
+            return response(content: ['query' => true, 'professional' => $validateUser], status: 200);
+
+        }else{
+            // Retornamos el error:
+            return response(content: ['query' => false, 'error' => 'No existe ese profesional en el sistema.'], status: 404);
+        }
+    }
+
+    // Metodo para validar el usuario en el inicio de sesion: 
+    public function login($email)
+    {
+        // Realizamos la consulta a la tabla de la DB:
+        $model = DB::table('professionals')
+
+                // Filtramos el usuario requerido: 
+                ->where('email', $email);
 
         // Validamos que exista el registro en la tabla de la DB:
         $validateUser = $model->first();
@@ -355,3 +380,4 @@ class ProfessionalController extends Controller
         }
     }
 }
+
