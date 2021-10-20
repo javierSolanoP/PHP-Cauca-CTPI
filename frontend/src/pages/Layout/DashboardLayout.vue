@@ -18,10 +18,24 @@
       </sidebar-link>
 
 
-      <sidebar-link to="/servicio">
+      <sidebar-link to="/especialidades">
         <i class="tim-icons icon-atom"></i>
         <template>
-          <p> Servicio</p>
+          <p> Especialidades</p>
+        </template>
+      </sidebar-link>
+
+      <sidebar-link to="/servicios">
+        <i class="tim-icons icon-tap-02"></i>
+        <template>
+          <p> Servicios</p>
+        </template>
+      </sidebar-link>
+
+      <sidebar-link to="/historial">
+        <i class="tim-icons icon-shape-star"></i>
+        <template>
+          <p> Historial</p>
         </template>
       </sidebar-link>
 

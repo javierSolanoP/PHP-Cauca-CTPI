@@ -45,7 +45,7 @@
     </div>
     
     <template slot="footer">
-          <button class="btn btn-info agregar">Asignar</button>
+          <button class="btn btn-info agregar">Actualizar</button>
     </template>
   </card>
 </template>

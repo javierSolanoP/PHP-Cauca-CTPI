@@ -6,6 +6,7 @@
           <template slot="header">
             <div class="row">
               <div class="col-sm-6">
+                
                 <template>
                   <h5 class="card-category">Turnos</h5>
                 </template>

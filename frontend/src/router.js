@@ -4,7 +4,8 @@ import Historial from "@/pages/Historial.vue";
 import Addppersonal from "@/pages/Addppersonal.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import Profesion from "@/pages/Profesion.vue";
-import Servicio from "@/pages/Servicio.vue";
+import Especialidades from "@/pages/Especialidades.vue";
+import Servicios from "@/pages/Servicios.vue";
 
 
 
@@ -24,9 +25,14 @@ const routes = [{
       component: Dashboard
     },
     {
-      path: "servicio",
-      name: "Servicio",
-      component: Servicio
+      path: "especialidades",
+      name: "Especialidades",
+      component: Especialidades
+    },
+    {
+      path: "servicios",
+      name: "Servicios",
+      component: Servicios
     },
     
     {
@@ -34,6 +40,7 @@ const routes = [{
       name: "Perfil de Usuario",
       component: UserProfile
     },
+    
 
     {
       path: "profesion",

@@ -32,23 +32,25 @@
           <section class="row">
             <div class="col">
               <div class="card">
-                <div class="card-body">
-                  <table class="table">
+                <div class="card-body table-responsive-lg ">
+                   <table class="table table-hover">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">Nombre</th>
-        
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th></th>
+                        <th>Id</th>
+                        <th>Nombres</th>
+                    
                         
                       </tr>
-                      
+                    </thead>
 
-                    </tbody>
+                    <tbody>
+
+                      <tr>
+                        <td>1</td>
+                        <td>Urgencias</td>
+                      </tr>
+
+                    </tbody> 
                   </table>
                 </div>
               </div>
