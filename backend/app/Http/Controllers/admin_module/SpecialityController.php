@@ -13,16 +13,13 @@ class SpecialityController extends Controller
     public function index()
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = Speciality::select('speciality_name', 'description');
-
-        // Validamos que exista el registro en la tabla de la DB:
-        $validateSpeciality = $model->get();
+        $model = Speciality::select('speciality_name', 'description')->get();
 
         // Validamos que existan registros en la tabla de la DB:
-        if(count($validateSpeciality) != 0){
+        if(count($model) != 0){
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'specialities' => $validateSpeciality], status: 200);
+            return response(content: ['query' => true, 'specialities' => $model], status: 200);
 
         }else{
             // Retornamos el error:

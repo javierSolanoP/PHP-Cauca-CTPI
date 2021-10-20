@@ -22,7 +22,7 @@ class CreateModulesTable extends Migration
 
         Schema::table('modules', function (Blueprint $table) {
             DB::insert("insert into modules (module) values ('shift_module')");
-            DB::insert("insert into modules (module) values ('user_module')");
+            DB::insert("insert into modules (module) values ('professional_module')");
             DB::insert("insert into modules (module) values ('admin_module')");
             DB::insert("insert into modules (module) values ('public_module')");
         });
