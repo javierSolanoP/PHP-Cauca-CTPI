@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
+        'professional_id'
+    ];
+
+    protected $hidden = [
+        'created_at', 
+        'updated_at'
+    ];
 }

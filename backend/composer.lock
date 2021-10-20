@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9be6d5f25657f3197250ff758b6e6c23",
+    "content-hash": "b9b0fc0a84f3c18637ef53af7687342a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1323,6 +1323,44 @@
                 "source": "https://github.com/laravel/tinker/tree/v2.6.2"
             },
             "time": "2021-09-28T15:47:34+00:00"
+        },
+        {
+            "name": "laravell/users",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/javierSolanoP/user-controller.git",
+                "reference": "28ccb1013e3b017dac61f486b6ff6d4a9c1f5fa2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/javierSolanoP/user-controller/zipball/28ccb1013e3b017dac61f486b6ff6d4a9c1f5fa2",
+                "reference": "28ccb1013e3b017dac61f486b6ff6d4a9c1f5fa2",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Laravell\\Users\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "javierSolanoP",
+                    "email": "jsmolano24@misena.edu.co"
+                }
+            ],
+            "description": "Validates users",
+            "support": {
+                "issues": "https://github.com/javierSolanoP/user-controller/issues",
+                "source": "https://github.com/javierSolanoP/user-controller/tree/main"
+            },
+            "time": "2021-10-13T22:53:17+00:00"
         },
         {
             "name": "league/commonmark",
@@ -7952,7 +7990,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "laravell/users": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
