@@ -66,6 +66,7 @@
 <style lang="scss"></style>
 <script>
 
+
 import TopNavbar from "./TopNavbar.vue";
 import DashboardContent from "./DashboardContent.vue";
 import SideBar from "@/components/SidebarPlugin/SideBar.vue";
@@ -86,8 +87,14 @@ export default {
   data() {
     return {
       backgroundColor: "#11AAB8",
+      services:[],
     };
   },
+  methods:{
+    verServicios(){
+    
+    }
+  }
 
 };
 </script>

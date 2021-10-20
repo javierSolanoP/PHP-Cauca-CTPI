@@ -40,22 +40,32 @@
                     <div class="form-group col-md-4">
                       <label for="">Servicio</label>
                       <select  class="form-select"
-                        aria-label="Default select example"
-                      >
-                        <option value="1">---seleccione---</option>
-                        <option value="2">Urgencias</option>
+                        aria-label="Default select example">
+                        <option 
+                        
+                        v-for="servicios in services"
+                           :key="servicios.service_name"
+                           
+                           
+
+                       >{{servicios.service_name}}</option>
                       </select>
                     </div>
+
+
+
                     <div class="form-group col-md-4">
                       <label for="">Especialidad</label>
                       <select
                         class="form-select"
                         aria-label="Default select example"
                       >
-                        <option value="1">---seleccione---</option>
-                        <option value="2">pediatra</option>
+
+                        <option value="2">fffff</option>
                       </select>
                     </div>
+
+
                     
                     <div class="form-group col-md-2 text-center ">
                       <router-link class="btn btn-info agregar my-3" to="/asignarServicio">Agregar</router-link>
@@ -151,7 +161,7 @@
 
 <script>
 import {Card} from "@/components/index";
-
+import axios from "axios"
 
 
 
@@ -159,8 +169,41 @@ import {Card} from "@/components/index";
 export default {
   components:{
     Card,
-
+  
   },
+
+  data(){
+    return{
+      services:[],
+      services_specialities:[]
+    }
+  },
+  mounted(){
+    this.MostrarServicios();
+    this.MostrarProfecionesDeServicios();
+  },
+
+  methods:{
+    MostrarServicios(){
+      axios
+      .get("http://127.0.0.1:8000/api/services/v1")
+      .then(datos =>{
+        console.log(datos)
+        this.services = datos.data.services
+      })
+    },
+
+    MostrarProfecionesDeServicios(){
+      axios
+      .get("http://127.0.0.1:8000/api/service-specialities/v1")
+      .then(datos =>{
+        console.log(datos)
+        this.services_specialities =datos.data.services_specialities
+      })
+    }
+    
+
+  }
 }
 </script>
 

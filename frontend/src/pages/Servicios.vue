@@ -25,7 +25,7 @@
         <card class="card">
           <h4 slot="header" class="card-title mb-4">
             <template>
-                <button class="btn btn-info agregar">Agregar</button>
+                <router-link class="btn btn-info agregar" to="/agregarServicio">Agregar</router-link>
             </template>
           </h4>
 
@@ -33,11 +33,15 @@
             <div class="col">
               <div class="card">
                 <div class="card-body table-responsive-lg ">
-                   <table class="table table-hover">
-                    <thead class="thead-dark">
+                   <table class="table table-hover" >
+                    <thead class="thead-dark"
+
+                    >
                       <tr>
-                        <th>Id</th>
-                        <th>Nombres</th>
+                        <th>Nombre</th>
+                        <th>Cantidad de personal</th>
+                        <th>Numero de Dias</th>
+                        <th>Horas</th>
                     
                         
                       </tr>
@@ -45,9 +49,13 @@
 
                     <tbody>
 
-                      <tr>
-                        <td>1</td>
-                        <td>Urgencias</td>
+                      <tr v-for="servicios in services"
+                    :key="servicios.service_name"
+                    >
+                        <td>{{servicios.service_name}}</td>
+                        <td>{{servicios.personal_amount}}</td>
+                        <td>{{servicios.number_of_days}}</td>
+                        <td>{{servicios.hourlyintensity}}</td>
                       </tr>
 
                     </tbody> 
@@ -63,13 +71,36 @@
 </template>
 
 <script>
+import axios from "axios"
 import { Card } from "@/components/index";
 
 export default {
   components: {
     Card,
   },
-};
+
+  data(){
+    return{
+      services:[],
+      
+    }
+  },
+  mounted(){
+    this.MostrarServicios();
+
+  },
+
+  methods:{
+    MostrarServicios(){
+      axios
+      .get("http://127.0.0.1:8000/api/services/v1")
+      .then(datos =>{
+        console.log(datos)
+        this.services = datos.data.services
+      })
+    },
+  }
+}
 </script>
 <style  scoped>
 

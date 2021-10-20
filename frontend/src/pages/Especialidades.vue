@@ -25,7 +25,7 @@
         <card class="card">
           <h4 slot="header" class="card-title mb-4">
             <template>
-                <button class="btn btn-info agregar">Agregar</button>
+                <router-link class="btn btn-info agregar" to="/agregarespecialidad">Agregar</router-link>
             </template>
           </h4>
 
@@ -36,8 +36,8 @@
                    <table class="table table-hover">
                     <thead class="thead-dark">
                       <tr>
-                        <th>Id</th>
-                        <th>Nombres</th>
+                        <th>Nombre de la Esppecialidad</th>
+                        <th>Descripcion</th>
                     
                         
                       </tr>
@@ -45,9 +45,13 @@
 
                     <tbody>
 
-                      <tr>
-                        <td>1</td>
-                        <td>Pediatra</td>
+                      <tr v-for="especialidades in specialities " 
+                      :key="especialidades.speciality_name">
+
+
+                        <td>{{especialidades.speciality_name}}</td>
+                        <td>{{especialidades.description}}</td>
+                        
                       </tr>
 
                     </tbody> 
@@ -63,12 +67,36 @@
 </template>
 
 <script>
+import axios from "axios"
 import { Card } from "@/components/index";
 
 export default {
   components: {
     Card,
   },
+
+  data(){
+    return{
+      specialities:[],
+      
+    }
+  },
+  mounted(){
+    this.Especialidades();
+
+  },
+
+  methods:{
+    Especialidades(){
+      axios
+      .get("http://127.0.0.1:8000/api/specialities/v1")
+      .then(datos =>{
+        console.log(datos)
+        this.specialities = datos.data.specialities
+      })
+    },
+  }
+
 };
 </script>
 <style  scoped>

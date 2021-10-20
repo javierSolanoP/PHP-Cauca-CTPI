@@ -3,7 +3,7 @@
       <div class="sidebar-wrapper text-left">
         <div class="logo">
 
-          <img   src="@/assets/logos.png" >
+          <img   src="@/assets/logos.svg" >
         </div>
         <ul class="nav">
           <slot>

@@ -7,8 +7,8 @@ import Profesion from "@/pages/Profesion.vue";
 import Especialidades from "@/pages/Especialidades.vue";
 import Servicios from "@/pages/Servicios.vue";
 import AsignarServicio from "@/pages/AsignarServicio.vue";
-
-
+import AgregarServicio from "@/pages/AgregarServicio.vue"
+import AgregarEspecialidad from "@/pages/AgregarEspecialidades.vue"
 
 const routes = [{
   path: "/",
@@ -57,8 +57,19 @@ const routes = [{
       path: "asignarServicio",
       name: "Asignar Servicio",
       component: AsignarServicio
+    },
+    {
+      path: "agregarServicio",
+      name: "Agregar servicios",
+      component: AgregarServicio
+    },
+    {
+      path: "agregarespecialidad",
+      name: "Agregar Especialidad",
+      component: AgregarEspecialidad
     }
   ]
+
 
 }]
 
