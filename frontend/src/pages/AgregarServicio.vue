@@ -161,7 +161,7 @@ export default {
 </script>
 <style lang="sass" scoped>
 
-// Fonts
+
 $mainFont: 'Raleway', sans-serif
 $subFont: 'Montserrat', sans-serif
 
@@ -171,7 +171,7 @@ $secondaryColor: #f7edd5
 $inputColor: #bbbbbb
 
 
-// Form Area
+
 .form
   position: relative
 
@@ -241,6 +241,5 @@ $inputColor: #bbbbbb
         z-index: 1
         &.hasError
           border-color: $primaryColor
-
 
 </style>
