@@ -160,7 +160,7 @@ class NurseController extends Controller
         if($validateNurse){
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'professional' => $validateNurse], status: 200);
+            return response(content: ['query' => true, 'nurse' => $validateNurse], status: 200);
 
         }else{
             // Retornamos el error:

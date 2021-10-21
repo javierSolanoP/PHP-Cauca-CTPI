@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProfessionalSpeciality extends Model
+class NurseSpeciality extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'professional_id',
+        'nurse_id',
         'speciality_id'
     ];
 

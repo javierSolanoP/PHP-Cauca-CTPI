@@ -3,35 +3,35 @@
 namespace App\Http\Controllers\admin_module;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProfessionalSpeciality as ModelsProfessionalSpeciality;
+use App\Models\NurseSpeciality;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ProfessionalSpecialityController extends Controller
+class NurseSpecialityController extends Controller
 {
-    // Metodo para retornar todas las especialidades de los profesionales: 
+    // Metodo para retornar todas las especialidades de las enfermeras: 
     public function index()
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = DB::table('professional_specialities')
+        $model = DB::table('nurse_specialities')
 
-                    // Realizamos la consulta a la tabla del modelo 'Professional': 
-                    ->join('professionals', 'professionals.id_professional', '=', 'professional_specialities.professional_id')
+                    // Realizamos la consulta a la tabla del modelo 'Nurse': 
+                    ->join('nurses', 'nurses.id_nurse', '=', 'nurse_specialities.nurse_id')
 
                     // Realizamos la consulta a la tabla del modelo 'Speciality': 
-                    ->join('specialities', 'specialities.id_speciality', '=', 'professional_specialities.speciality_id')
+                    ->join('specialities', 'specialities.id_speciality', '=', 'nurse_specialities.speciality_id')
 
                     // Seleccionamos los campos que se requieren: 
-                    ->select('specialities.speciality_name as speciality', 'specialities.description', 'professionals.identification as identification')
+                    ->select('specialities.speciality_name as speciality', 'specialities.description', 'nurses.identification as identification')
 
-                    // Obtenemos todas las especialidades asociadas a ese profesional: 
+                    // Obtenemos todas las especialidades asociadas a las enfermeras: 
                     ->get()
 
                     // Agrupamos por identification: 
                     ->groupBy('identification');
 
-        // Validamos que existan especialidades asociadas al servicio: 
+        // Validamos que existan especialidades asociadas a las enfermeras: 
         if(count($model) != 0){
 
             // Declaramos el arreglo 'resgisters', para almacenar los grupos con indice numerico: 
@@ -43,16 +43,16 @@ class ProfessionalSpecialityController extends Controller
             }
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'services-specialities' => $registers], status: 200);
+            return response(content: ['query' => true, 'nurses-specialities' => $registers], status: 200);
 
         }else{
             // Retornamos el error:
-            return response(content: ['query' => false, 'error' => 'No existen especialidades para los profesionales.'], status: 404);
+            return response(content: ['query' => false, 'error' => 'No existen especialidades para las enfermeras.'], status: 404);
         }
 
     }
 
-    // Metodo para registrar una especialidad de un profesional: 
+    // Metodo para registrar una especialidad de una enfermera: 
     public function store(Request $request)
     {
         // Si los argumentos contienen caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
@@ -63,40 +63,40 @@ class ProfessionalSpecialityController extends Controller
         if(!empty($identification)
         && !empty($speciality)){
 
-            // Instanciamos los controladores de los modelos 'Professional' y 'Speciality'. Para validar que existan: 
-            $professionalController = new ProfessionalController;
+            // Instanciamos los controladores de los modelos 'nurse' y 'Speciality'. Para validar que existan: 
+            $nurseController = new NurseController;
             $specialityController   = new SpecialityController;
 
             // Validamos que existan: 
-            $validateProfessional = $professionalController->show(identification: $identification);
+            $validateNurse = $nurseController->show(identification: $identification);
             $validateSpeciality   = $specialityController->show(speciality: $speciality);
 
             // Extraemos el contenido de las respuestas de validacion: 
-            $contentValidateProfessional  = $validateProfessional->getOriginalContent();
+            $contentValidateNurse  = $validateNurse->getOriginalContent();
             $contentValidateSpeciality    = $validateSpeciality->getOriginalContent();
 
             // Si existen, extraemos sus 'id': 
-            if($contentValidateProfessional['query']){
+            if($contentValidateNurse['query']){
 
                 if($contentValidateSpeciality['query']){
 
                     // Extraemos los id: 
-                    $professional_id = $contentValidateProfessional['professional']->id;
+                    $nurse_id = $contentValidateNurse['nurse']->id;
                     $speciality_id   = $contentValidateSpeciality['speciality']['id'];
 
                     // Realizamos la consulta a la tabla de la DB:
-                    $model = ModelsProfessionalSpeciality::where('professional_id', $professional_id)->where('speciality_id', $speciality_id);
+                    $model = NurseSpeciality::where('nurse_id', $nurse_id)->where('speciality_id', $speciality_id);
 
                     // Validamos que no exista el registro en la tabla de la DB:
-                    $validateProfessionalSpeciality = $model->first();
+                    $validateNurseSpeciality = $model->first();
 
                     // Sino existe, realizamos el registro: 
-                    if(!$validateProfessionalSpeciality){
+                    if(!$validateNurseSpeciality){
 
                         try{
 
-                            ModelsProfessionalSpeciality::create([
-                                'professional_id' => $professional_id,
+                            NurseSpeciality::create([
+                                'nurse_id' => $nurse_id,
                                 'speciality_id' => $speciality_id
                             ]);
 
@@ -110,7 +110,7 @@ class ProfessionalSpecialityController extends Controller
 
                     }else{
                         // Retornamos el error:
-                        return response(content: ['register' >= false, 'error' => 'Ya existe esa especialidad a ese profesional.'], status: 403);
+                        return response(content: ['register' => false, 'error' => 'Ya existe esa especialidad a esa enfermera.'], status: 403);
                     }
 
                 }else{
@@ -120,7 +120,7 @@ class ProfessionalSpecialityController extends Controller
 
             }else{
                 // Retornamos el error:
-                return response(content: ['register' => false, 'error' => $contentValidateProfessional['error']], status: $validateProfessional->status());
+                return response(content: ['register' => false, 'error' => $contentValidateNurse['error']], status: $validateNurse->status());
             }
 
         }else{
@@ -129,90 +129,90 @@ class ProfessionalSpecialityController extends Controller
         }
     }
 
-    // Metodo para retornar las especialidades de un profesional especifico: 
+    // Metodo para retornar las especialidades de una enfermera especifica: 
     public function show($identification)
     {
-        // Instanciamos el controlador del modelo 'Service', para validar que exista: 
-        $professionalController = new ProfessionalController; 
+        // Instanciamos el controlador del modelo 'Nurse', para validar que exista: 
+        $nurseController = new NurseController; 
 
         // Validamos que exista: 
-        $validateProfessional = $professionalController->show(identification: $identification);
+        $validateNurse = $nurseController->show(identification: $identification);
 
         // Extraemos el contenido de la respuesta de validacion: 
-        $contentValidateProfessional = $validateProfessional->getOriginalContent();
+        $contentValidateNurse = $validateNurse->getOriginalContent();
 
         // Si existe, extraemos su id y  realizamos la consulta a la DB: 
-        if($contentValidateProfessional['query']){
+        if($contentValidateNurse['query']){
 
             // Extraemos el id: 
-            $professional_id = $contentValidateProfessional['professional']->id;
+            $nurse_id = $contentValidateNurse['nurse']->id;
 
             // Realizamos la consulta a la tabla de la DB:
-            $model = DB::table('professional_specialities')
+            $model = DB::table('nurse_specialities')
 
                         // Filtramos por el profesional: 
-                        ->where('professional_id', $professional_id)
+                        ->where('nurse_id', $nurse_id)
 
-                        // Realizamos la consulta a la tabla del modelo 'Professional': 
-                        ->join('professionals', 'professionals.id_professional', '=', 'professional_specialities.professional_id')
+                        // Realizamos la consulta a la tabla del modelo 'Nurse': 
+                        ->join('nurses', 'nurses.id_nurse', '=', 'nurse_specialities.nurse_id')
 
                         // Realizamos la consulta a la tabla del modelo 'Speciality': 
-                        ->join('specialities', 'specialities.id_speciality', '=', 'professional_specialities.speciality_id')
+                        ->join('specialities', 'specialities.id_speciality', '=', 'nurse_specialities.speciality_id')
 
                         // Seleccionamos los campos que se requieren: 
-                        ->select('specialities.speciality_name as speciality', 'specialities.description', 'professionals.identification as identification')
+                        ->select('specialities.speciality_name as speciality', 'specialities.description', 'nurses.identification as identification')
 
-                        // Obtenemos todas las especialidades asociadas a ese profesional: 
+                        // Obtenemos todas las especialidades asociadas a esa enfermera: 
                         ->get();
 
-            // Validamos que existan especialidades asociadas al servicio: 
+            // Validamos que existan especialidades asociadas a la enfermera: 
             if(count($model) != 0){
 
                 // Retornamos la respuesta:
-                return response(content: ['query' => true, 'professional-specialities' => $model], status: 200);
+                return response(content: ['query' => true, 'nurse-specialities' => $model], status: 200);
 
             }else{
                 // Retornamos el error:
-                return response(content: ['query' => false, 'error' => 'No existen especialidades para ese profesional.'], status: 404);
+                return response(content: ['query' => false, 'error' => 'No existen especialidades para esa enfermera.'], status: 404);
             }
         }else{
             // Retornamos el error:
-            return response(content: $contentValidateProfessional, status: $validateProfessional->status());
+            return response(content: $contentValidateNurse, status: $validateNurse->status());
         }
     }
 
-    // Metodo para eliminar la especialidad de un profesional: 
+    // Metodo para eliminar la especialidad de una enfermera: 
     public function destroy($identification, $speciality)
     {
-        // Instanciamos el controlador del modelo 'Service', para validar que exista: 
-        $professionalController = new ProfessionalController;
+        // Instanciamos el controlador del modelo 'Nurse', para validar que exista: 
+        $nurseController        = new NurseController;
         $specialityController   = new SpecialityController; 
 
         // Validamos que exista: 
-        $validateProfessional = $professionalController->show(identification: $identification);
+        $validateNurse = $nurseController->show(identification: $identification);
         $validateSpeciality   = $specialityController->show(speciality: $speciality);
 
         // Extraemos el contenido de la respuesta de validacion: 
-        $contentValidateProfessional = $validateProfessional->getOriginalContent();
+        $contentValidateNurse = $validateNurse->getOriginalContent();
         $contentValidateSpeciality   = $validateSpeciality->getOriginalContent();
 
         // Si existe, extraemos sus id y  realizamos la consulta a la DB: 
-        if($contentValidateProfessional['query']){
+        if($contentValidateNurse['query']){
 
             if($contentValidateSpeciality['query']){
 
                 // Extraemos los id: 
-                $professional_id    = $contentValidateProfessional['professional']->id;
+                $nurse_id    = $contentValidateNurse['nurse']->id;
                 $speciality_id      = $contentValidateSpeciality['speciality']['id']; 
     
                 // Realizamos la consulta a la tabla de la DB:
-                $model = ModelsProfessionalSpeciality::where('professional_id', $professional_id)->where('speciality_id', $speciality_id);
+                $model = NurseSpeciality::where('nurse_id', $nurse_id)->where('speciality_id', $speciality_id);
     
-                // Validamos que exista esa especialidad asignada al servicio: 
-                $validateProfessionalSpeciality = $model->first();
+                // Validamos que exista esa especialidad asignada a la enfermera: 
+                $validateNurseSpeciality = $model->first();
     
-                // Validamos que existan especialidades asociadas al servicio: 
-                if($validateProfessionalSpeciality){
+                // Validamos que existan especialidades asociadas a la enfermera: 
+                if($validateNurseSpeciality){
     
                     try{
     
@@ -228,7 +228,7 @@ class ProfessionalSpecialityController extends Controller
                     }
                 }else{
                     // Retornamos el error:
-                    return response(content: ['delete' => false, 'error' => 'No existe esa especialidad para ese profesional.'], status: 404);
+                    return response(content: ['delete' => false, 'error' => 'No existe esa especialidad para esa enfermera.'], status: 404);
                 }
 
             }else{
@@ -238,8 +238,7 @@ class ProfessionalSpecialityController extends Controller
 
         }else{
             // Retornamos el error:
-            return response(content:['delete' => false, 'error' => $contentValidateProfessional['error']], status: $validateProfessional->status());
+            return response(content:['delete' => false, 'error' => $contentValidateNurse['error']], status: $validateNurse->status());
         }
     }
 }
-
