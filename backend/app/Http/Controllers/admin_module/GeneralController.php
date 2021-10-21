@@ -1,18 +1,17 @@
 <?php
+
 namespace App\Http\Controllers\admin_module;
 
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 
 
-class EndpointController extends Controller{
-
-
-    //metodo para ver que modulos pertenecen a un rol
+class GeneralController extends Controller
+{
+    ////metodo para ver que modulos pertenecen a un rol
     public function modulesRoles($role){
 
         //convertimos el role a minuscula
@@ -20,11 +19,11 @@ class EndpointController extends Controller{
         
         
         //comprobamos que el role exista en la BD
-        $model = Role::select('role_name as role');
+        $model = Role::select('role_name as role')->where('role_name', $role_name);
         
         //validamos que haya registro en la base de datos
         $validateRole = $model->first();
-        //return $validateRole;
+        //return $model->first();
 
         //si existe el rol:
         if ($validateRole) {
@@ -38,11 +37,12 @@ class EndpointController extends Controller{
                 //realizamos la consulta a la tabla 'module_roles'
                 ->join('module_roles', 'module_roles.module_id', '=', 'modules.id_module')
                 ->join('roles', 'roles.id_role', '=', 'module_roles.role_id')
-                ->select('modules.module', 'roles.role_name')
+                ->leftJoin('endpoints', 'endpoints.module_id', '=', 'modules.id_module')
+                ->select('modules.module', 'roles.role_name', 'endpoints.endpoint')
 
                 ->get()
 
-                ->groupBy('role');
+                ->groupBy('role_name');
 
                 //si existen roles con ese modulo los asignamos
                 if (count($modules) != 0) {
@@ -50,6 +50,7 @@ class EndpointController extends Controller{
                     //declaramos el array rolesModulos
                     $rolesModulos = [];
 
+                    return $modules;
                     //iteramos los modulos almacenados en el array  'modules'
                     foreach ($modules as $module) {
                         
@@ -57,22 +58,15 @@ class EndpointController extends Controller{
                         $rolesModulos[] = $module;
                     }
 
+                    //retornamos la respuesta con los modulos
                     return response(content: ['query' => 'true', 'modulos' => $rolesModulos], status:200);
-
-
                 }
 
         }else{
 
             //retornamos el error
             return response(content: ['query' => 'false', 'error' => 'El role ingresado no existe']);
-
         }
 
     }
-
-    
-
-
 }
-
