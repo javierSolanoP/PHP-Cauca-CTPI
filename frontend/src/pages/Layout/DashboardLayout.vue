@@ -25,10 +25,17 @@
         </template>
       </sidebar-link>
 
-      <sidebar-link to="/servicios">
+      <sidebar-link to="/pacientes">
         <i class="tim-icons icon-tap-02"></i>
         <template>
-          <p> Servicios</p>
+          <p> Pacientes</p>
+        </template>
+      </sidebar-link>
+
+      <sidebar-link to="/asignarEspecialidad">
+        <i class="tim-icons icon-tap-02"></i>
+        <template>
+          <p> Asignar Especialidad </p>
         </template>
       </sidebar-link>
 

@@ -5,10 +5,11 @@ import Addppersonal from "@/pages/Addppersonal.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import Profesion from "@/pages/Profesion.vue";
 import Especialidades from "@/pages/Especialidades.vue";
-import Servicios from "@/pages/Servicios.vue";
+import Pacientes from "@/pages/Pacientes.vue";
 import AsignarServicio from "@/pages/AsignarServicio.vue";
-import AgregarServicio from "@/pages/AgregarServicio.vue"
+import AgregarPaciente from "@/pages/AgregarPaciente.vue"
 import AgregarEspecialidad from "@/pages/AgregarEspecialidades.vue"
+import AsignarEspecialidad from "@/pages/AsignarEspecialidad.vue"
 
 const routes = [{
   path: "/",
@@ -31,9 +32,9 @@ const routes = [{
       component: Especialidades
     },
     {
-      path: "servicios",
-      name: "Servicios",
-      component: Servicios
+      path: "pacientes",
+      name: "Pacientes",
+      component: Pacientes
     },
     
     {
@@ -59,14 +60,19 @@ const routes = [{
       component: AsignarServicio
     },
     {
-      path: "agregarServicio",
-      name: "Agregar servicios",
-      component: AgregarServicio
+      path: "agregarpaciente",
+      name: "Agregar Paciente",
+      component: AgregarPaciente
     },
     {
       path: "agregarespecialidad",
       name: "Agregar Especialidad",
       component: AgregarEspecialidad
+    },
+    {
+      path: "asignarEspecialidad",
+      name: "Asignar Especialidad",
+      component: AsignarEspecialidad
     }
   ]
 
