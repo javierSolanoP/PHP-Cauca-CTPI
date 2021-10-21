@@ -148,8 +148,8 @@ class RoleController extends Controller
         }
     }
 
-    // Metodo para retornar los usuarios asignados con un role especifico: 
-    public function professionals($role)
+    // Metodo para retornar las enfermeras asignadas con un role especifico: 
+    public function nurses($role)
     {
         // Si el argumento contiene caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
         $role_name = strtolower($role);
@@ -164,10 +164,10 @@ class RoleController extends Controller
         if($validateRole){
 
             // Realizamos la consulta a la tabla del modelo 'Professional': 
-            $registers = $model->join('professionals', 'roles.id_role', '=', 'professionals.role_id')
+            $registers = $model->join('nurses', 'roles.id_role', '=', 'nurses.role_id')
 
                                 // Seleccionamos los campos que se requieren: 
-                                ->select('roles.role_name as role', 'professionals.identification', 'professionals.name', 'professionals.last_name', 'professionals.email')
+                                ->select('roles.role_name as role', 'nurses.identification', 'nurses.name', 'nurses.last_name', 'nurses.email')
 
                                 // Obtenemos los usuarios que pertenzcan al role: 
                                 ->get()
@@ -178,23 +178,23 @@ class RoleController extends Controller
             // Si existen professionales asignados a ese role, los retornamos: 
             if(count($registers) != 0){
 
-                // Declaramos el array 'professionals', para almacenar los professionales con indice numerico: 
-                $professionals = [];
+                // Declaramos el array 'nurses', para almacenar los professionales con indice numerico: 
+                $nurses = [];
 
-                // Iteramos los professionals almacenados en el array 'professionals': 
-                foreach($registers as $user){
+                // Iteramos los nurses almacenados en el array 'nurses': 
+                foreach($registers as $nurse){
 
-                    // Almacenamos el professionals en el array 'professionals': 
-                    $professionals[] = $user;
+                    // Almacenamos el nurses en el array 'nurses': 
+                    $nurses[] = $nurse;
 
                 }
 
                 // Retornamos la respuesta:
-                return response(content: ['query' => true, 'roles' => $professionals], status: 200);
+                return response(content: ['query' => true, 'nurses' => $nurses], status: 200);
 
             }else{
                 // Retornamos el error:
-                return response(content: ['query' => false, 'error' => 'No existen profesionales con ese role.'], status: 404);
+                return response(content: ['query' => false, 'error' => 'No existen enfermeras con ese role.'], status: 404);
             }
 
         }else{
