@@ -9,6 +9,7 @@ class Modules {
         private $module_name
     ){}
 
+    // Usamos el trait 'MetodModule'. Para validar las propiedades:
     use MethodModule;
 
 }
