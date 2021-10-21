@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin_module;
+namespace App\Http\Controllers\patient_module;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Require\Class\Patient as ClassPatient;
@@ -223,3 +223,4 @@ class PatientController extends Controller
         }
     }
 }
+

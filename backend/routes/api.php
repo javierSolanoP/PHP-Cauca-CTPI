@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\admin_module\NurseSpecialityController;
-use App\Http\Controllers\admin_module\PatientSpecialityController;
+
 use App\Http\Controllers\admin_module\RoleController;
+use App\Http\Controllers\patient_module\PatientSpecialityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +18,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Modulo de administrador: 
-Route::apiResource(name: '/patients/v1', controller: 'App\Http\Controllers\admin_module\PatientController');
+Route::apiResource(name: '/patients/v1', controller: 'App\Http\Controllers\patient_module\PatientController');
 
 Route::apiResource(name: '/specialities/v1', controller: 'App\Http\Controllers\admin_module\SpecialityController');
 
-Route::apiResource(name: '/patient-specialities/v1', controller: 'App\Http\Controllers\admin_module\PatientSpecialityController');
+Route::apiResource(name: '/patient-specialities/v1', controller: 'App\Http\Controllers\patient_module\PatientSpecialityController');
 Route::delete(uri: '/delete-patient-specialities/v1/{patient}/{speciality}', action: [PatientSpecialityController::class, 'destroy']);
 
 Route::apiResource(name: '/nurses/v1', controller: 'App\Http\Controllers\admin_module\NurseController');

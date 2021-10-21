@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\admin_module;
+namespace App\Http\Controllers\patient_module;
 
+use App\Http\Controllers\admin_module\SpecialityController;
 use App\Http\Controllers\Controller;
 use App\Models\PatientSpeciality;
 use Exception;
@@ -241,3 +242,4 @@ class PatientSpecialityController extends Controller
         }
     }
 }
+

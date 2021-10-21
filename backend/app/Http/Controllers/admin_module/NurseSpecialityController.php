@@ -202,7 +202,7 @@ class NurseSpecialityController extends Controller
             if($contentValidateSpeciality['query']){
 
                 // Extraemos los id: 
-                $nurse_id    = $contentValidateNurse['nurse']->id;
+                $nurse_id           = $contentValidateNurse['nurse']->id;
                 $speciality_id      = $contentValidateSpeciality['speciality']['id']; 
     
                 // Realizamos la consulta a la tabla de la DB:
