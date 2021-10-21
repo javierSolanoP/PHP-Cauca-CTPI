@@ -87,7 +87,6 @@ const routes = [{
       component: Enfermeras
     },
    
-    enfermeras
 
   ]
 
