@@ -29,6 +29,7 @@ Route::apiResource(name: '/nurses/v1', controller: 'App\Http\Controllers\admin_m
 
 Route::apiResource(name: '/roles/v1', controller: 'App\Http\Controllers\admin_module\RoleController');
 
+
 Route::get(uri: '/nurses-role/v1/{role}', action: [RoleController::class, 'nurses']);
 
 Route::apiResource(name: '/nurse-specialities/v1', controller: 'App\Http\Controllers\admin_module\NurseSpecialityController');
