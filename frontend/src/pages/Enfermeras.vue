@@ -102,7 +102,7 @@ export default {
 
     MostrarPatients(){
       axios
-      .get("http://127.0.0.1:8000/api/patients/v1")
+      .get("http://127.0.0.1:8000/api/nurser/v1")
       .then(datos =>{
         console.log(datos)
         this.patients = datos.data.patients
@@ -111,6 +111,8 @@ export default {
   }
 }
 </script>
+
+
 <style  scoped>
 
 
