@@ -44,7 +44,7 @@ class PatientSpecialityController extends Controller
             }
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'patients-specialities' => $registers], status: 200);
+            return response(content: ['query' => true, 'patientsSpecialities' => $registers], status: 200);
 
         }else{
             // Retornamos el error:
