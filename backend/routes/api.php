@@ -40,3 +40,5 @@ Route::delete(uri: '/delete-patient-specialities/v1/{patient}/{speciality}', act
 Route::apiResource(name: '/times/v1', controller: 'App\Http\Controllers\shift_module\TimeController');
 Route::get(uri: '/times/v1/{start_time}/{finish_time}', action : [TimeController::class, 'show']);
 Route::delete(uri: '/times/v1/{start_time}/{finish_time}', action : [TimeController::class, 'destroy']);
+
+Route::apiResource(name: '/schedules/v1', controller: 'App\Http\Controllers\shift_module\ScheduleController');

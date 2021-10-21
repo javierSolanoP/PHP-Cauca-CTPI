@@ -17,7 +17,7 @@ class Schedule extends Model
         'friday',
         'saturday',
         'sunday',
-        'professional_id'
+        'nurse_id'
     ];
 
     protected $hidden = [
