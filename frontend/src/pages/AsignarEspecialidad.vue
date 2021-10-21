@@ -98,8 +98,8 @@ export default {
       axios
       .get("http://127.0.0.1:8000/api/patient-specialities/v1")
       .then(datos =>{
-        console.log(datos)
-        this.patients_specialities = datos.data.patients_specialities[0]
+        console.log(datos.data.patients-specialities)
+        // this.patients_specialities = datos.data.patients_specialities
       })
     },
   }
