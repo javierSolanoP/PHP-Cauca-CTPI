@@ -3,6 +3,8 @@
 use App\Http\Controllers\admin_module\ProfessionalSpecialityController;
 use App\Http\Controllers\admin_module\RoleController;
 use App\Http\Controllers\admin_module\ServiceSpecialityController;
+use App\Http\Controllers\admin_module\EndpointController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +34,5 @@ Route::get(uri: '/professionals-role/v1/{role}', action: [RoleController::class,
 
 Route::apiResource(name: '/professional-specialities/v1', controller: 'App\Http\Controllers\admin_module\ProfessionalSpecialityController');
 Route::delete(uri: '/delete-professional-specialities/v1/{identification}/{speciality}', action: [ProfessionalSpecialityController::class, 'destroy']);
+
+Route::get(uri: '/modules-roles/v1/{role}', action: [EndpointController::class, 'modulesRoles']);
