@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin_module\ModulesRolesController;
 use App\Http\Controllers\admin_module\NurseSpecialityController;
 use App\Http\Controllers\admin_module\PatientSpecialityController;
 use App\Http\Controllers\admin_module\RoleController;
@@ -31,3 +32,7 @@ Route::get(uri: '/nurses-role/v1/{role}', action: [RoleController::class, 'nurse
 
 Route::apiResource(name: '/nurse-specialities/v1', controller: 'App\Http\Controllers\admin_module\NurseSpecialityController');
 Route::delete(uri: '/delete-nurse-specialities/v1/{identification}/{speciality}', action: [NurseSpecialityController::class, 'destroy']);
+
+Route::get(uri: '/module-assignment/v1', action: [ModulesRolesController::class, 'index']);
+Route::apiResource(name: '/module-assignment/v1', controller: 'App\Http\Controllers\admin_module\ModulesRolesController');
+Route::delete(uri: '/delete-module-assignment/v1/{roleName}/{moduleName}', action: [ModulesRolesController::class, 'destroy']);
