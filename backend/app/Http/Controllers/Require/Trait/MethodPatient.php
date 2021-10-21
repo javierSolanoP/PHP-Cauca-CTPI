@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Require\Trait;
 
 use App\Http\Controllers\Require\Class\Validate;
 
-trait MethodService {
+trait MethodPatient {
 
-    // Metodo para validar las propiedades de la instancia 'User': 
+    // Metodo para validar las propiedades de la instancia 'patient': 
     public function validateData()
     {
         // Instnciamos la clase 'Validate', para validar las propiedades: 
@@ -19,17 +19,17 @@ trait MethodService {
 
             $data = $_SESSION['validate'];
 
-            //Validamos la propiedad 'service_name': 
-            if(!empty($data->service_name)){
+            //Validamos la propiedad 'patient_name': 
+            if(!empty($data->patient_name)){
 
-                if($validate->validateString($data->service_name)){
+                if($validate->validateString($data->patient_name)){
 
                     // Almacenamos la propiedad en el arreglo: 
-                    $valid['service_name'] = true;
+                    $valid['patient_name'] = true;
 
                 }else{
                     // Retornamos el error:
-                    return ["register" => false, "error" => "service_name: no puede contener datos numericos."];
+                    return ["register" => false, "error" => "patient_name: no puede contener datos numericos."];
                 }
             }
 

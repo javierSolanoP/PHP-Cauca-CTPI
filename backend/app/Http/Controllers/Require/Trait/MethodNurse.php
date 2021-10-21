@@ -6,9 +6,9 @@ use App\Http\Controllers\Require\Class\Validate;
 
 session_start(); 
 
-trait MethodProfessional {
+trait MethodNurse {
 
-     // Metodo para validar las propiedades de la instancia 'User': 
+     // Metodo para validar las propiedades de la instancia 'nurse': 
      public function validateData()
      {
         // Instnciamos la clase 'Validate', para validar las propiedades: 

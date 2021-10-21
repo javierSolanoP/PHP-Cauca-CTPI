@@ -3,36 +3,35 @@
 namespace App\Http\Controllers\admin_module;
 
 use App\Http\Controllers\Controller;
-use App\Models\ServiceSpeciality;
+use App\Models\PatientSpeciality;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PHPUnit\TextUI\XmlConfiguration\Group;
 
-class ServiceSpecialityController extends Controller
+class PatientSpecialityController extends Controller
 {
     // Metodo para retornar todos las especialidades de los servicios: 
     public function index()
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = DB::table('service_specialities')
+        $model = DB::table('patient_specialities')
 
-                    // Realizamos la consulta a la tabla del modelo 'Service': 
-                    ->join('services', 'services.id_service', '=', 'service_specialities.service_id')
+                    // Realizamos la consulta a la tabla del modelo 'Patient': 
+                    ->join('patients', 'patients.id_patient', '=', 'patient_specialities.patient_id')
 
                     // Realizamos la consulta a la tabla del modelo 'Speciality': 
-                    ->join('specialities', 'specialities.id_speciality', '=', 'service_specialities.speciality_id')
+                    ->join('specialities', 'specialities.id_speciality', '=', 'patient_specialities.speciality_id')
 
                     // Seleccionamos los campos que se requieren: 
-                    ->select('specialities.speciality_name as speciality', 'specialities.description', 'services.service_name as service')
+                    ->select('specialities.speciality_name as speciality', 'specialities.description', 'patients.patient_name as patient')
 
                     // Obtenemos todas las especialidades asociadas a ese servicio: 
                     ->get()
 
-                    // Agrupamos por servicos: 
-                    ->groupBy('service');
+                    // Agrupamos por pacientes: 
+                    ->groupBy('patient');
 
-        // Validamos que existan especialidades asociadas al servicio: 
+        // Validamos que existan especialidades asociadas al paciente: 
         if(count($model) != 0){
 
             // Declaramos el arreglo 'resgisters', para almacenar los grupos con indice numerico: 
@@ -44,59 +43,59 @@ class ServiceSpecialityController extends Controller
             }
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'services-specialities' => $registers], status: 200);
+            return response(content: ['query' => true, 'patients-specialities' => $registers], status: 200);
 
         }else{
             // Retornamos el error:
-            return response(content: ['query' => false, 'error' => 'No existen especialidades para los servicios.'], status: 404);
+            return response(content: ['query' => false, 'error' => 'No existen especialidades para los pacientes.'], status: 404);
         }
     }
 
-    // Metodo para registrar una especialidad a un servicio especifico: 
+    // Metodo para registrar una especialidad a un paciente especifico: 
     public function store(Request $request)
     {
         // Si los argumentos contienen caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
-        $service_name    = strtolower($request->input('service_name'));
+        $patient_name    = strtolower($request->input('patient_name'));
         $speciality_name = strtolower($request->input('speciality_name'));
 
         // Validamos que los argumentos no esten vacios:
-        if(!empty('service_name')
+        if(!empty('patient_name')
         && !empty('speciality_name')){
 
-            // Instanciamos los controladores de los modelos 'Service' y 'Speciality'. Para validar que existan: 
-            $serviceController    = new ServiceController;
+            // Instanciamos los controladores de los modelos 'Patient' y 'Speciality'. Para validar que existan: 
+            $patientController    = new PatientController;
             $specialityController = new SpecialityController;
 
             // Validamos que existan: 
-            $validateService    = $serviceController->show(service: $service_name);
+            $validatePatient    = $patientController->show(patient: $patient_name);
             $validateSpeciality = $specialityController->show(speciality: $speciality_name);
 
             // Extraemos el contenido de las respuestas de validacion: 
-            $contentValidateService    = $validateService->getOriginalContent();
+            $contentValidatePatient    = $validatePatient->getOriginalContent();
             $contentValidateSpeciality = $validateSpeciality->getOriginalContent();
 
             // Si existen, extraemos sus 'id': 
-            if($contentValidateService['query']){
+            if($contentValidatePatient['query']){
 
                 if($contentValidateSpeciality['query']){
 
                     // Extraemos los id: 
-                    $service_id     = $contentValidateService['service']['id'];
+                    $patient_id     = $contentValidatePatient['patient']['id'];
                     $speciality_id  = $contentValidateSpeciality['speciality']['id'];
 
                     // Realizamos la consulta a la tabla de la DB:
-                    $model = ServiceSpeciality::where('service_id', $service_id)->where('speciality_id', $speciality_id);
+                    $model = PatientSpeciality::where('patient_id', $patient_id)->where('speciality_id', $speciality_id);
 
                     // Validamos que no exista el registro en la tabla de la DB:
-                    $validateServiceSpeciality = $model->first();
+                    $validatePatientSpeciality = $model->first();
 
                     // Sino existe, lo registramos: 
-                    if(!$validateServiceSpeciality){
+                    if(!$validatePatientSpeciality){
 
                         try{
 
-                            ServiceSpeciality::create([
-                                'service_id'    => $service_id,
+                            PatientSpeciality::create([
+                                'patient_id'    => $patient_id,
                                 'speciality_id' => $speciality_id
                             ]);
 
@@ -110,7 +109,7 @@ class ServiceSpecialityController extends Controller
 
                     }else{
                         // Retornamos el error:
-                        return response(content: ['register' => false, 'error' => 'Ya existe esa especialidad para ese servicio.'], status: 403);
+                        return response(content: ['register' => false, 'error' => 'Ya existe esa especialidad para ese paciente.'], status: 403);
                     }
 
                 }else{
@@ -120,54 +119,53 @@ class ServiceSpecialityController extends Controller
 
             }else{
                 // Retornamos el error:
-                return response(content: ['register' => false, 'error' => $contentValidateService['error']], status: $validateService->status());
+                return response(content: ['register' => false, 'error' => $contentValidatePatient['error']], status: $validatePatient->status());
             }
-
 
         }else{
             // Retornamos el error:
-            return response(content: ['register' => false, 'error' => "Campo 'service_name' o 'speciality_name': NO deben estar vacios."], status: 403);
+            return response(content: ['register' => false, 'error' => "Campo 'patient_name' o 'speciality_name': NO deben estar vacios."], status: 403);
         }
 
     }
 
-    // Metodo para retornar las especialidades de un servicio especifico: 
-    public function show($service)
+    // Metodo para retornar las especialidades de un paciente especifico: 
+    public function show($patient)
     {
         // Si el argumento contiene caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
-        $service_name = strtolower($service);
+        $patient_name = strtolower($patient);
 
-        // Instanciamos el controlador del modelo 'Service', para validar que exista: 
-        $serviceController = new ServiceController; 
+        // Instanciamos el controlador del modelo 'Patient', para validar que exista: 
+        $patientController = new PatientController; 
 
         // Validamos que exista: 
-        $validateService = $serviceController->show(service: $service_name);
+        $validatePatient = $patientController->show(patient: $patient_name);
 
         // Extraemos el contenido de la respuesta de validacion: 
-        $contentValidateService = $validateService->getOriginalContent();
+        $contentValidatePatient = $validatePatient->getOriginalContent();
 
         // Si existe, extraemos su id y  realizamos la consulta a la DB: 
-        if($contentValidateService['query']){
+        if($contentValidatePatient['query']){
 
             // Extraemos el id: 
-            $service_id = $contentValidateService['service']['id'];
+            $patient_id = $contentValidatePatient['patient']['id'];
 
             // Realizamos la consulta a la tabla de la DB:
-            $model = DB::table('service_specialities')
+            $model = DB::table('patient_specialities')
 
-                        // Filtramos por el servicio: 
-                        ->where('service_id', $service_id)
+                        // Filtramos por el paciente: 
+                        ->where('patient_id', $patient_id)
 
                         // Realizamos la consulta a la tabla del modelo 'Speciality': 
-                        ->join('specialities', 'specialities.id_speciality', '=', 'service_specialities.speciality_id')
+                        ->join('specialities', 'specialities.id_speciality', '=', 'patient_specialities.speciality_id')
 
                         // Seleccionamos los campos que se requieren: 
                         ->select('specialities.speciality_name', 'specialities.description')
 
-                        // Obtenemos todas las especialidades asociadas a ese servicio: 
+                        // Obtenemos todas las especialidades asociadas a ese paciente: 
                         ->get();
 
-            // Validamos que existan especialidades asociadas al servicio: 
+            // Validamos que existan especialidades asociadas al paciente: 
             if(count($model) != 0){
 
                 // Retornamos la respuesta:
@@ -175,50 +173,50 @@ class ServiceSpecialityController extends Controller
 
             }else{
                 // Retornamos el error:
-                return response(content: ['query' => false, 'error' => 'No existen especialidades para ese servicio.'], status: 404);
+                return response(content: ['query' => false, 'error' => 'No existen especialidades para ese paciente.'], status: 404);
             }
 
         }else{
             // Retornamos el error:
-            return response(content: $contentValidateService, status: $validateService->status());
+            return response(content: $contentValidatePatient, status: $validatePatient->status());
         }
 
     }
 
-    // Metodo para eliminar una especialidad de un servicio especifico: 
-    public function destroy($service, $speciality)
+    // Metodo para eliminar una especialidad de un paciente especifico: 
+    public function destroy($patient, $speciality)
     {
         // Si los argumentos contienen caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
-        $service_name    = strtolower($service);
+        $patient_name    = strtolower($patient);
         $speciality_name = strtolower($speciality);
 
-        // Instanciamos los controladores de los modelos 'Service' y 'Speciality'. Para validar que existan: 
-        $serviceController    = new ServiceController;
+        // Instanciamos los controladores de los modelos 'patient' y 'Speciality'. Para validar que existan: 
+        $patientController    = new PatientController;
         $specialityController = new SpecialityController;
 
         // Validamos que existan: 
-        $validateService    = $serviceController->show(service: $service_name);
+        $validatePatient    = $patientController->show(patient: $patient_name);
         $validateSpeciality = $specialityController->show(speciality: $speciality_name);
 
         // Extraemos el contenido de las respuestas de validacion: 
-        $contentValidateService    = $validateService->getOriginalContent();
+        $contentValidatePatient    = $validatePatient->getOriginalContent();
         $contentValidateSpeciality = $validateSpeciality->getOriginalContent();
 
         // Si existe, extraemos sus id y  realizamos la consulta a la DB: 
-        if($contentValidateService['query']){
+        if($contentValidatePatient['query']){
 
             // Extraemos los id: 
-            $service_id    = $contentValidateService['service']['id'];
+            $patient_id    = $contentValidatePatient['patient']['id'];
             $speciality_id = $contentValidateSpeciality['speciality']['id']; 
 
             // Realizamos la consulta a la tabla de la DB:
-            $model = ServiceSpeciality::where('service_id', $service_id)->where('speciality_id', $speciality_id);
+            $model = PatientSpeciality::where('patient_id', $patient_id)->where('speciality_id', $speciality_id);
 
-            // Validamos que exista esa especialidad asignada al servicio: 
-            $validateServiceSpeciality = $model->first();
+            // Validamos que exista esa especialidad asignada al paciente: 
+            $validatePatientSpeciality = $model->first();
 
-            // Validamos que existan especialidades asociadas al servicio: 
-            if($validateServiceSpeciality){
+            // Validamos que existan especialidades asociadas al paciente: 
+            if($validatePatientSpeciality){
 
                 try{
 
@@ -239,7 +237,7 @@ class ServiceSpecialityController extends Controller
 
         }else{
             // Retornamos el error:
-            return response(content: ['delete' => false, 'error' => $contentValidateService['error']], status: $validateService->status());
+            return response(content: ['delete' => false, 'error' => $contentValidatePatient['error']], status: $validatePatient->status());
         }
     }
 }

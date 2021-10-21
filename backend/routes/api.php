@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin_module\PatientSpecialityController;
 use App\Http\Controllers\admin_module\ProfessionalSpecialityController;
 use App\Http\Controllers\admin_module\RoleController;
 use App\Http\Controllers\admin_module\ServiceSpecialityController;
@@ -18,14 +19,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Modulo de administrador: 
-Route::apiResource(name: '/services/v1', controller: 'App\Http\Controllers\admin_module\ServiceController');
+Route::apiResource(name: '/patients/v1', controller: 'App\Http\Controllers\admin_module\PatientController');
 
 Route::apiResource(name: '/specialities/v1', controller: 'App\Http\Controllers\admin_module\SpecialityController');
 
-Route::apiResource(name: '/service-specialities/v1', controller: 'App\Http\Controllers\admin_module\ServiceSpecialityController');
-Route::delete(uri: '/delete-service-specialities/v1/{service}/{speciality}', action: [ServiceSpecialityController::class, 'destroy']);
+Route::apiResource(name: '/patient-specialities/v1', controller: 'App\Http\Controllers\admin_module\PatientSpecialityController');
+Route::delete(uri: '/delete-patient-specialities/v1/{patient}/{speciality}', action: [PatientSpecialityController::class, 'destroy']);
 
-Route::apiResource(name: '/professionals/v1', controller: 'App\Http\Controllers\admin_module\ProfessionalController');
+Route::apiResource(name: '/nurses/v1', controller: 'App\Http\Controllers\admin_module\NurseController');
 
 Route::apiResource(name: '/roles/v1', controller: 'App\Http\Controllers\admin_module\RoleController');
 Route::get(uri: '/professionals-role/v1/{role}', action: [RoleController::class, 'professionals']);

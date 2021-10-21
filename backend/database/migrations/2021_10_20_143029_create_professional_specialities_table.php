@@ -15,9 +15,9 @@ class CreateProfessionalSpecialitiesTable extends Migration
     {
         Schema::create('professional_specialities', function (Blueprint $table) {
             $table->id('id_professional_speciality');
-            $table->unsignedBigInteger('professional_id');
+            $table->unsignedBigInteger('nurse_id');
             $table->unsignedBigInteger('speciality_id');
-            $table->foreign('professional_id')->references('id_professional')->on('professionals')->onDelete('cascade');
+            $table->foreign('nurse_id')->references('id_nurse')->on('nurses')->onDelete('cascade');
             $table->foreign('speciality_id')->references('id_speciality')->on('specialities')->onDelete('cascade');
             $table->timestamps();
         });

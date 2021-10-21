@@ -22,8 +22,8 @@ class CreateSchedulesTable extends Migration
             $table->boolean('friday');
             $table->boolean('saturday');
             $table->boolean('sunday');
-            $table->unsignedBigInteger('professional_id');
-            $table->foreign('professional_id')->references('id_professional')->on('professionals')->onDelete('cascade');
+            $table->unsignedBigInteger('nurse_id');
+            $table->foreign('nurse_id')->references('id_nurse')->on('nurses')->onDelete('cascade');
             $table->timestamps();
         });
     }

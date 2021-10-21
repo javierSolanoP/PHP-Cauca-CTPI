@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Require\Class;
 
-use App\Http\Controllers\Require\Trait\MethodProfessional;
+use App\Http\Controllers\Require\Trait\MethodNurse;
 
-class Professional {
+class Nurse {
 
     public function __construct(
         private $identification = '', 
@@ -15,6 +15,6 @@ class Professional {
         private $confirmPassword = ''
     ){}
 
-    // Usamos el trait 'MethodProfessional'. Para validar las propiedades: 
-    use MethodProfessional;
+    // Usamos el trait 'MethodNurse'. Para validar las propiedades: 
+    use MethodNurse;
 }

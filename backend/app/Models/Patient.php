@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceSpeciality extends Model
+class Patient extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'service_id',
-        'speciality_id'
+        'patient_name',
+        'personal_amount',
+        'number_of_days',
+        'hourlyintensity'
     ];
 
     protected $hidden = [

@@ -3,26 +3,25 @@
 namespace App\Http\Controllers\admin_module;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Require\Class\Professional as ClassProfessional;
-use App\Http\Controllers\RoleController;
-use App\Models\Professional;
+use App\Http\Controllers\Require\Class\Nurse as ClassNurse;
+use App\Models\Nurse;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ProfessionalController extends Controller
+class NurseController extends Controller
 {
     // Metodo para retornar todos los registros de la tabla de la DB: 
     public function index()
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = DB::table('professionals')
+        $model = DB::table('nurses')
 
                 // Realizamos la consulta a la tabla del modelo 'Role': 
-                ->join('roles', 'roles.id_role', '=', 'professionals.role_id')
+                ->join('roles', 'roles.id_role', '=', 'nurses.role_id')
 
                 // Seleccionamos los campos que se requiren: 
-                ->select('professionals.identification', 'professionals.name', 'professionals.last_name', 'professionals.email', 'roles.role_name as role');
+                ->select('nurses.identification', 'nurses.name', 'nurses.last_name', 'nurses.email', 'roles.role_name as role');
 
         // Validamos que existan registros en la tabla de la DB:
         $validateUser = $model->get();
@@ -31,15 +30,15 @@ class ProfessionalController extends Controller
         if(count($validateUser) != 0){
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'users' => $validateUser], status: 200);
+            return response(content: ['query' => true, 'nurses' => $validateUser], status: 200);
 
         }else{
             // Retornamos el error:
-            return response(content: ['query' => false, 'error' => 'No existen profesionales en el sistema.'], status: 404);
+            return response(content: ['query' => false, 'error' => 'No existen enfermeras en el sistema.'], status: 404);
         }
     }
 
-    // Metodo para registrar un usuario en la tabla de la DB: 
+    // Metodo para registrar una enfermera en la tabla de la DB: 
     public function store(Request $request)
     {
         // Si los argumentos contienen caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
@@ -71,7 +70,7 @@ class ProfessionalController extends Controller
                 $role_id = $contentRole['role']['id'];
 
                 // Realizamos la consulta a la tabla de la DB:
-                $model = Professional::where('identification', $request->input(key: 'identification'));
+                $model = Nurse::where('identification', $request->input(key: 'identification'));
 
                 // Validamos que exista el registro en la tabla de la DB:
                 $validateUser = $model->first();
@@ -79,8 +78,8 @@ class ProfessionalController extends Controller
                 // Sino existe, validamos los argumentos: 
                 if(!$validateUser){
 
-                    // Instanciamos la clase 'professional'. Para validar los argumentos: 
-                    $professional = new ClassProfessional(
+                    // Instanciamos la clase 'Nurse'. Para validar los argumentos: 
+                    $nurse = new ClassNurse(
                                              identification: $request->input(key: 'identification'), 
                                              name: $name,
                                              last_name: $last_name,
@@ -89,18 +88,18 @@ class ProfessionalController extends Controller
                                              confirmPassword: $request->input(key: 'confirmPassword')
                                             );
 
-                    // Asignamos a la sesion 'validate' la instancia 'professional'. Con sus propiedades cargadas de informacion: 
-                    $_SESSION['validate'] = $professional; 
+                    // Asignamos a la sesion 'validate' la instancia 'nurse'. Con sus propiedades cargadas de informacion: 
+                    $_SESSION['validate'] = $nurse; 
 
                     // Validamos los argumentos: 
-                    $validateProfessionalArgm = $professional->validateData();
+                    $validateNurseArgm = $nurse->validateData();
  
                     // Si los argumentos han sido validados, realizamos el registro: 
-                    if($validateProfessionalArgm['register']){
+                    if($validateNurseArgm['register']){
 
                         try{
 
-                            Professional::create([
+                            Nurse::create([
                                 'identification' => $request->input(key: 'identification'),
                                 'name' => $name,
                                 'last_name' => $last_name,
@@ -111,7 +110,7 @@ class ProfessionalController extends Controller
                             ]);
 
                             // Retornamos la respuesta:
-                            return response(content: $validateProfessionalArgm, status: 201);
+                            return response(content: $validateNurseArgm, status: 201);
 
                         }catch(Exception $e){
                             // Retornamos el error:
@@ -120,12 +119,12 @@ class ProfessionalController extends Controller
 
                     }else{
                         // Retornamos el error:
-                        return response(content: $validateProfessionalArgm, status: 403);
+                        return response(content: $validateNurseArgm, status: 403);
                     }
 
                 }else{
                     // Retornamos el error:
-                    return response(content: ['register' => false, 'error' => 'Ya existe ese profesional en el sistema.'], status: 403);
+                    return response(content: ['register' => false, 'error' => 'Ya existe esa enfermera en el sistema.'], status: 403);
                 }
 
             }else{
@@ -139,61 +138,61 @@ class ProfessionalController extends Controller
         }
     }
 
-    // Metodo para retornar un usuario especifico: 
+    // Metodo para retornar un enfermera especifico: 
     public function show($identification)
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = DB::table('professionals')
+        $model = DB::table('nurses')
 
                 // Filtramos el usuario requerido: 
                 ->where('identification', $identification)
 
                 // Realizamos la consulta a la tabla del modelo 'Role: 
-                ->join('roles', 'roles.id_role', '=', 'professionals.role_id')
+                ->join('roles', 'roles.id_role', '=', 'nurses.role_id')
 
                 // Seleccionamos los campos que se requiren: 
-                ->select('professionals.id_professional as id', 'professionals.identification', 'professionals.name', 'professionals.last_name', 'professionals.email', 'professionals.session', 'roles.role_name as role');
+                ->select('nurses.id_nurse as id', 'nurses.identification', 'nurses.name', 'nurses.last_name', 'nurses.email', 'nurses.session',  'nurses.avatar', 'roles.role_name as role');
 
         // Validamos que exista el registro en la tabla de la DB:
-        $validateUser = $model->first();
+        $validateNurse = $model->first();
 
         // Si existe, retornamos el registro: 
-        if($validateUser){
+        if($validateNurse){
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'professional' => $validateUser], status: 200);
+            return response(content: ['query' => true, 'professional' => $validateNurse], status: 200);
 
         }else{
             // Retornamos el error:
-            return response(content: ['query' => false, 'error' => 'No existe ese profesional en el sistema.'], status: 404);
+            return response(content: ['query' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
         }
     }
 
-    // Metodo para validar el usuario en el inicio de sesion: 
+    // Metodo para validar la enfermera en el inicio de sesion: 
     public function login($email)
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = DB::table('professionals')
+        $model = DB::table('nurses')
 
                 // Filtramos el usuario requerido: 
                 ->where('email', $email);
 
         // Validamos que exista el registro en la tabla de la DB:
-        $validateUser = $model->first();
+        $validateNurse = $model->first();
 
         // Si existe, retornamos el registro: 
-        if($validateUser){
+        if($validateNurse){
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'professional' => $validateUser], status: 200);
+            return response(content: ['query' => true, 'nurse' => $validateNurse], status: 200);
 
         }else{
             // Retornamos el error:
-            return response(content: ['query' => false, 'error' => 'No existe ese profesional en el sistema.'], status: 404);
+            return response(content: ['query' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
         }
     }
 
-    // Metodo para actualizar un usuario en la tala de la DB: 
+    // Metodo para actualizar una enfermera en la tala de la DB: 
     public function update(Request $request, $identification)
     {
         // Si los argumentos contienen caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
@@ -224,16 +223,16 @@ class ProfessionalController extends Controller
                 $role_id = $contentRole['role']['id'];
  
                 // Realizamos la consulta a la tabla de la DB:
-                $model = Professional::where('identification', $identification);
+                $model = Nurse::where('identification', $identification);
  
                 // Validamos que exista el registro en la tabla de la DB:
-                $validateUser = $model->first();
+                $validateNurse = $model->first();
  
                 // Si existe, validamos los argumentos: 
-                if($validateUser){
+                if($validateNurse){
  
-                    // Instanciamos la clase 'professional'. Para validar los argumentos: 
-                    $professional = new ClassProfessional(
+                    // Instanciamos la clase 'Nurse'. Para validar los argumentos: 
+                    $nurse = new ClassNurse(
                                               name: $name,
                                               last_name: $last_name,
                                               email: $request->input(key: 'email'),
@@ -241,14 +240,14 @@ class ProfessionalController extends Controller
                                               confirmPassword: $request->input(key: 'confirmPassword')
                                             );
  
-                    // Asignamos a la sesion 'validate' la instancia 'Professional. Con sus propiedades cargadas de informacion: 
-                    $_SESSION['validate'] = $professional; 
+                    // Asignamos a la sesion 'validate' la instancia 'nurse. Con sus propiedades cargadas de informacion: 
+                    $_SESSION['validate'] = $nurse; 
  
                     // Validamos los argumentos: 
-                    $validateProfessionalArgm = $professional->validateData();
+                    $validateNurseArgm = $nurse->validateData();
   
                     // Si los argumentos han sido validados, realizamos el registro: 
-                    if($validateProfessionalArgm['register']){
+                    if($validateNurseArgm['register']){
  
                         try{
  
@@ -259,7 +258,7 @@ class ProfessionalController extends Controller
                                             'role_id' => $role_id]);
  
                             // Retornamos la respuesta:
-                            return response(content: $validateProfessionalArgm, status: 201);
+                            return response(content: $validateNurseArgm, status: 201);
  
                         }catch(Exception $e){
                             // Retornamos el error:
@@ -268,12 +267,12 @@ class ProfessionalController extends Controller
  
                     }else{
                         // Retornamos el error:
-                        return response(content: $validateProfessionalArgm, status: 403);
+                        return response(content: $validateNurseArgm, status: 403);
                     }
  
                 }else{
                     // Retornamos el error:
-                    return response(content: ['register' => false, 'error' => 'No existe ese profesional en el sistema.'], status: 404);
+                    return response(content: ['register' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
                 }
  
             }else{
@@ -287,17 +286,17 @@ class ProfessionalController extends Controller
         }
     }
 
-    // Metodo para actualizar la sesion del usuario: 
+    // Metodo para actualizar la sesion de la enfermera: 
     public function updateSession($email, $session)
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = Professional::where('email', $email);
+        $model = Nurse::where('email', $email);
 
         // Validamos que exista el registro en la tabla de la DB:
-        $validateUser = $model->first();
+        $validateNurse = $model->first();
 
         // Si existe, actualizamos la sesion: 
-        if($validateUser){
+        if($validateNurse){
 
             try{
 
@@ -314,21 +313,21 @@ class ProfessionalController extends Controller
 
         }else{
             // Retornamos el error:
-            return response(content: ['update' => false, 'error' => 'No existe ese profesional en el sistema.'], status: 404);
+            return response(content: ['update' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
         }
     }
 
-    // Metodo para aniadir la URL del avatar del usuario: 
+    // Metodo para aniadir la URL del avatar de la enfermera: 
     public function addAvatar($email, $url)
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = Professional::where('email', $email);
+        $model = Nurse::where('email', $email);
 
         // Validamos que exista el registro en la tabla de la DB:
-        $validateUser = $model->first();
+        $validateNurse = $model->first();
 
         // Si existe, actualizamos el campo 'avatar' de la tabla de la DB: 
-        if($validateUser){
+        if($validateNurse){
 
             try{
 
@@ -345,21 +344,21 @@ class ProfessionalController extends Controller
 
         }else{
             // Retornamos el error:
-            return response(content: ['add' => false, 'error' => 'No existe ese profesional en el sistema.'], status: 404);
+            return response(content: ['add' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
         }
     }
 
-    // Metodo para eliminar un usuario de la tabla de la DB: 
+    // Metodo para eliminar una enfermera de la tabla de la DB: 
     public function destroy($identification)
     {
         // Realizamos la consulta a la tabla de la DB:
-        $model = Professional::where('identification', $identification);
+        $model = Nurse::where('identification', $identification);
 
         // Validamos que exista el registro en la tabla de la DB:
-        $validateUser = $model->first();
+        $validateNurse = $model->first();
 
         // Si existe, eliminamos el registro: 
-        if($validateUser){
+        if($validateNurse){
 
             try{
 
@@ -376,8 +375,7 @@ class ProfessionalController extends Controller
 
         }else{
             // Retornamos el error:
-            return response(content: ['delete' => false, 'error' => 'No existe ese profesional en el sistema.'], status: 404);
+            return response(content: ['delete' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
         }
     }
 }
-

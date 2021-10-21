@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServiceSpecialitiesTable extends Migration
+class CreatePatientSpecialitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateServiceSpecialitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('service_specialities', function (Blueprint $table) {
-            $table->id('id_service_speciality');
-            $table->unsignedBigInteger('service_id');
+        Schema::create('patient_specialities', function (Blueprint $table) {
+            $table->id('id_patient_speciality');
+            $table->unsignedBigInteger('patient_id');
             $table->unsignedBigInteger('speciality_id');
-            $table->foreign('service_id')->references('id_service')->on('services')->onDelete('cascade');
+            $table->foreign('patient_id')->references('id_patient')->on('patients')->onDelete('cascade');
             $table->foreign('speciality_id')->references('id_speciality')->on('specialities')->onDelete('cascade');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreateServiceSpecialitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('service_specialities');
+        Schema::dropIfExists('patient_specialities');
     }
 }

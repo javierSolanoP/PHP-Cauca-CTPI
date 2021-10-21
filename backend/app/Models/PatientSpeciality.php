@@ -5,23 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Professional extends Model
+class PatientSpeciality extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'identification',
-        'name',
-        'last_name',
-        'email',
-        'password',
-        'avatar',
-        'session',
-        'role_id'
+        'patient_id',
+        'speciality_id'
     ];
 
     protected $hidden = [
-        'password',
         'created_at', 
         'updated_at'
     ];

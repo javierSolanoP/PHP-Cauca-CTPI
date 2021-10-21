@@ -5,18 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Nurse extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'service_name',
-        'personal_amount',
-        'number_of_days',
-        'hourlyintensity'
+        'identification',
+        'name',
+        'last_name',
+        'email',
+        'password',
+        'avatar',
+        'session',
+        'role_id'
     ];
 
     protected $hidden = [
+        'password',
         'created_at', 
         'updated_at'
     ];
