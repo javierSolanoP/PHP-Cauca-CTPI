@@ -70,9 +70,6 @@ class EndpointController extends Controller{
         }
 
     }
-
     
-
-
 }
 

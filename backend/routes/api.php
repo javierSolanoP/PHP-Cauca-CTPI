@@ -4,6 +4,7 @@ use App\Http\Controllers\admin_module\ProfessionalSpecialityController;
 use App\Http\Controllers\admin_module\RoleController;
 use App\Http\Controllers\admin_module\ServiceSpecialityController;
 use App\Http\Controllers\admin_module\GeneralController;
+use App\Http\Controllers\admin_module\ModulesRolesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,4 @@ Route::apiResource(name: '/professional-specialities/v1', controller: 'App\Http\
 Route::delete(uri: '/delete-professional-specialities/v1/{identification}/{speciality}', action: [ProfessionalSpecialityController::class, 'destroy']);
 
 Route::get(uri: '/modules-roles/v1/{role}', action: [GeneralController::class, 'modulesRoles']);
+Route::get(uri: '/modules/roles/v1', action: [ModulesRolesController::class, 'index']);
