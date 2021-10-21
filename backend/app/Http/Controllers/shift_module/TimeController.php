@@ -12,14 +12,13 @@ class TimeController extends Controller
     // Metodo para retornar todos los horarios de la tabla de la DB: 
     public function index()
     {
-
         // Realizamos la consulta a la tabla de la DB:
         $model = Time::select('start_time', 'finish_time');
         
         // Validamos que exista el registro en la tabla de la DB:
         $validateTime = $model->get();
 
-        // Si existen, loss retornamos: 
+        // Si existen, los retornamos: 
         if(count($validateTime) != 0){
 
             // Retornamos la respuesta:
