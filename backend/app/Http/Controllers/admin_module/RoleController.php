@@ -31,7 +31,7 @@ class RoleController extends Controller
         }
     }
 
-    // Metodo para retornar todos los roles con sus respectivos usuarios de la tabla de la DB: 
+    // Metodo para retornar todos los roles con sus respectivos profesionales de la tabla de la DB: 
     public function roles()
     {
         // Realizamos la consulta a la tabla de la DB:
@@ -40,7 +40,7 @@ class RoleController extends Controller
         // Validamos que exista el role:
         $validateRole = $model->get();
 
-        // Si existe, realizamos la consulta a la tablas de los modelos 'User' y 'Permission':
+        // Si existe, realizamos la consulta a la tablas de los modelos 'Professional' y 'Permission':
         if($validateRole){
 
             // Realizamos la consulta a la tabla del modelo 'User': 
@@ -55,22 +55,22 @@ class RoleController extends Controller
                                 // Agrupamos por roles: 
                                 ->groupBy('role');
 
-            // Si existen usuarios asignados a ese role, los retornamos: 
+            // Si existen professionals asignados a ese role, los retornamos: 
             if(count($registers) != 0){
 
-                // Declaramos el array 'users', para almacenar los usuarios con indice numerico: 
-                $users = [];
+                // Declaramos el array 'professionals', para almacenar los professionales con indice numerico: 
+                $professionals = [];
 
-                // Iteramos los usuarios almacenados en el array 'registers': 
+                // Iteramos los professionals almacenados en el array 'registers': 
                 foreach($registers as $user){
 
-                    // Almacenamos el usuario en el array 'users': 
-                    $users[] = $user;
+                    // Almacenamos el professionals en el array 'users': 
+                    $professionals[] = $user;
 
                 }
 
                 // Retornamos la respuesta:
-                return response(content: ['query' => true, 'roles' => $users], status: 200);
+                return response(content: ['query' => true, 'roles' => $professionals], status: 200);
 
             }else{
                 // Retornamos el error:
@@ -160,10 +160,10 @@ class RoleController extends Controller
         // Validamos que exista el role:
         $validateRole = $model->first();
 
-        // Si existe, realizamos la consulta a la tablas de los modelos 'User' y 'Permission':
+        // Si existe, realizamos la consulta a la tablas de los modelos 'Professional' y 'Permission':
         if($validateRole){
 
-            // Realizamos la consulta a la tabla del modelo 'User': 
+            // Realizamos la consulta a la tabla del modelo 'Professional': 
             $registers = $model->join('professionals', 'roles.id_role', '=', 'professionals.role_id')
 
                                 // Seleccionamos los campos que se requieren: 
@@ -175,22 +175,22 @@ class RoleController extends Controller
                                 // Agrupamos por roles: 
                                 ->groupBy('role');
 
-            // Si existen usuarios asignados a ese role, los retornamos: 
+            // Si existen professionales asignados a ese role, los retornamos: 
             if(count($registers) != 0){
 
-                // Declaramos el array 'users', para almacenar los usuarios con indice numerico: 
-                $users = [];
+                // Declaramos el array 'professionals', para almacenar los professionales con indice numerico: 
+                $professionals = [];
 
-                // Iteramos los usuarios almacenados en el array 'registers': 
+                // Iteramos los professionals almacenados en el array 'professionals': 
                 foreach($registers as $user){
 
-                    // Almacenamos el usuario en el array 'users': 
-                    $users[] = $user;
+                    // Almacenamos el professionals en el array 'professionals': 
+                    $professionals[] = $user;
 
                 }
 
                 // Retornamos la respuesta:
-                return response(content: ['query' => true, 'roles' => $users], status: 200);
+                return response(content: ['query' => true, 'roles' => $professionals], status: 200);
 
             }else{
                 // Retornamos el error:
