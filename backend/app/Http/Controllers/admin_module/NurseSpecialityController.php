@@ -43,7 +43,7 @@ class NurseSpecialityController extends Controller
             }
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'nurses-specialities' => $registers], status: 200);
+            return response(content: ['query' => true, 'nursesSpecialities' => $registers], status: 200);
 
         }else{
             // Retornamos el error:
@@ -169,7 +169,7 @@ class NurseSpecialityController extends Controller
             if(count($model) != 0){
 
                 // Retornamos la respuesta:
-                return response(content: ['query' => true, 'nurse-specialities' => $model], status: 200);
+                return response(content: ['query' => true, 'nurseSpecialities' => $model], status: 200);
 
             }else{
                 // Retornamos el error:
@@ -202,7 +202,7 @@ class NurseSpecialityController extends Controller
             if($contentValidateSpeciality['query']){
 
                 // Extraemos los id: 
-                $nurse_id    = $contentValidateNurse['nurse']->id;
+                $nurse_id           = $contentValidateNurse['nurse']->id;
                 $speciality_id      = $contentValidateSpeciality['speciality']['id']; 
     
                 // Realizamos la consulta a la tabla de la DB:
