@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin_module\ModulesRolesController;
 use App\Http\Controllers\admin_module\NurseSpecialityController;
 use App\Http\Controllers\admin_module\PatientSpecialityController;
 use App\Http\Controllers\admin_module\RoleController;

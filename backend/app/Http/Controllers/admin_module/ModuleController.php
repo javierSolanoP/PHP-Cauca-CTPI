@@ -95,7 +95,7 @@ class ModuleController extends Controller{
         $module_name = strtolower($module);
 
         //realizamos la consulta a la tabla de la BD
-        $model = Module::select('id_module', 'module_name as module')->where('module', $module);
+        $model = Module::select('id_module as id', 'module')->where('module', $module);
 
         //validamos que exista el rgistro en la base de datos
         $validateModule = $model->first();
