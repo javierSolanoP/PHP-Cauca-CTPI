@@ -39,7 +39,7 @@
                         <th>Identificacion</th>
                         <th>Servicio</th>
                         <th>Especialidad</th>
-                        <th>Acciones</th>
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -49,10 +49,7 @@
                         <td>1002965382</td>
                         <td>Urgencias</td>
                         <td>Paramedico</td>
-                        <td>
-                          <button class="btn btn-info agregar">Editar</button>
-                          <button class="btn btn-danger">Eliminar</button>
-                        </td>
+                        
                       </tr>
 
                       <tr class="">
@@ -61,10 +58,7 @@
                         <td>1002965382</td>
                         <td>Urgencias</td>
                         <td>Paramedico</td>
-                        <td>
-                          <button class="btn btn-info agregar">Editar</button>
-                          <button class="btn btn-danger">Eliminar</button>
-                        </td>
+                        
                       </tr>
                       
                     </tbody>
@@ -87,10 +81,7 @@
   </section>
 </template>
 <script>
-
 import { Card } from "@/components/index";
-
-
 export default{
   components:{
     Card

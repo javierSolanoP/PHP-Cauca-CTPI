@@ -39,7 +39,7 @@
                 <div class="card-body row">
                     
                 <div class="col-4"></div>
-                  <form class=" col-4" >
+                  <form class=" col-4">
                     <div class="form-group col-md-8">
                       <label for="">Nombre De La Especialidad</label>
                       <input type="text" class="form-control" v-model="form.speciality_name">

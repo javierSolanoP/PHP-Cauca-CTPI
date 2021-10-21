@@ -38,6 +38,7 @@
                       <tr>
                         <th>Nombre de la Esppecialidad</th>
                         <th>Descripcion</th>
+                        <th>Descripcion</th>
                     
                         
                       </tr>
@@ -51,9 +52,12 @@
 
                         <td>{{especialidades.speciality_name}}</td>
                         <td>{{especialidades.description}}</td>
-                        
+                        <td>
+                          <button class="btn btn-info agregar">
+                            Editar
+                          </button>
+                        </td>
                       </tr>
-
                     </tbody> 
                   </table>
                 </div>

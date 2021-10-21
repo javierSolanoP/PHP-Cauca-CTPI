@@ -175,7 +175,7 @@ export default {
   data(){
     return{
       services:[],
-      services_specialities:[]
+      services_specialities:[],
     }
   },
   mounted(){

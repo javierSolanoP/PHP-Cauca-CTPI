@@ -56,6 +56,12 @@
                       <label for="">Horas</label>
                       <input type="text" class="form-control" v-model="form.hourlyintensity">
                     </div>
+
+                    <div class="form-group col-md-8">
+                      <label for="">Horas</label>
+                      <input type="file" class="form-control">
+                    </div>
+
                      <div class="form-group col-md-8">
                       <button class="btn btn-info agregar" v-on:click="guardar()">Agregar</button>
                     </div>
@@ -69,7 +75,7 @@
 
           
 
-          <!-- <button class="btn btn-info agregar">Agregar</button> -->
+      
         </card>
       </div>
     </div>
@@ -109,11 +115,9 @@ export default {
     guardar(){
       axios
       .post("http://127.0.0.1:8000/api/services/v1", this.form)
-
       .then(data => {
-
         console.log(data);
-        
+
         if(data.status === 201){
 
         this.$swal({
@@ -130,9 +134,42 @@ export default {
           
         }
       });
-      
-      
-      
+    }
+  },
+
+  obtenerDocumento(event) {
+    if (event.target.files[0].size <= 5000000) {
+      //5mb tope
+      let extDoc = event.target.files[0].name
+        .toString()
+        .substring(event.target.files[0].name.toString().lastIndexOf(".")); //extension del archivo
+      if (extDoc == ".pdf") {
+        this.docResolucon = event.target.files[0];
+        Swal.fire({
+          title: "Resolución Cargada!",
+          text:"Archivo cargado exitosamente!",
+          icon: "success",
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#238276",
+        });
+        this.docValido = true;
+      } else {
+        this.docValido = false;
+        this.docResolucon = null;
+        Swal.fire(
+          "Algo salió mal!",
+          "El archivo cargado no es un PDF!",
+          "error"
+        );
+      }
+    } else {
+      this.docValido = false;
+      this.docResolucon = null;
+      Swal.fire(
+        "Algo salió mal!",
+        "El archivo cargado pesa más de 5 MegaBytes!",
+        "error"
+      );
     }
   }
 }

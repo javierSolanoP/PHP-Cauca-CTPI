@@ -43,8 +43,6 @@
                         <th>Numero de Dias</th>
                         <th>Horas</th>
                         <th></th>
-                    
-                        
                       </tr>
                     </thead>
 
