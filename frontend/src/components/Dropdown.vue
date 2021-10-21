@@ -4,7 +4,6 @@
       class="dropdown nav-item"
       :class="{show: isOpen}"
       @click="toggleDropDown"
-      v-click-outside="closeDropDown"
       >
       <slot></slot>
   </component>
