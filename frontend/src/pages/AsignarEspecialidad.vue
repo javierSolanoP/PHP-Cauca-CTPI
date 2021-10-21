@@ -25,7 +25,7 @@
         <card class="card">
           <h4 slot="header" class="card-title mb-4">
             <template>
-                <router-link class="btn btn-info agregar" to="/asignarespecialidad">Agregar</router-link>
+                <router-link class="btn btn-info agregar" to="/addasig">Agregar</router-link>
             </template>
           </h4>
 
@@ -40,24 +40,26 @@
                         <th>Nombre Paciente</th>
                         <th>Descripcion</th>
                         <th>Especialidad</th>
+                        <th>Acciones</th>
 
                       </tr>
                     </thead>
 
                     <tbody>
 
-                      <tr v-for="especialidad in  patients_specialities " 
-                      :key="especialidad.patient">
+                      <tr v-for="especialidade in  patientsSpecialities " 
+                      :key="especialidade.patient">
 
-
-                        <td>{{especialidad.speciality}}</td>
-                        <td>{{especialidad.description}}</td>
-                        <td>{{especialidad.patient}}</td>
+                        <td>{{especialidade.speciality}}</td>
+                        <td>{{especialidade.description}}</td>
+                        <td>{{especialidade.patient}}</td>
+                        
                         <td>
                           <button class="btn btn-info agregar">
                             Editar
                           </button>
                         </td>
+
                       </tr>
                     </tbody> 
                   </table>
@@ -83,7 +85,7 @@ export default {
   data(){
     return{
 
-      patients_specialities:[],
+      patientsSpecialities:[],
 
     }
   },
@@ -98,8 +100,10 @@ export default {
       axios
       .get("http://127.0.0.1:8000/api/patient-specialities/v1")
       .then(datos =>{
-        console.log(datos.data.patients-specialities)
-        // this.patients_specialities = datos.data.patients_specialities
+        console.log(datos.data.patientsSpecialities)
+        this.patientsSpecialities = datos.data.patientsSpecialities[0]
+        console.log(this.patientsSpecialities)
+        
       })
     },
   }

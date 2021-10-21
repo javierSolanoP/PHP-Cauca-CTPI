@@ -91,6 +91,8 @@ export default {
   },
 
   methods:{
+    //metodo para mostrar las especialidades existentes 
+
     Especialidades(){
       axios
       .get("http://127.0.0.1:8000/api/specialities/v1")

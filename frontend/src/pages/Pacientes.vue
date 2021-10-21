@@ -7,11 +7,11 @@
             <div class="row">
               <div class="col-sm-6">
                 <template>
-                  <h5 class="card-category">Servicios</h5>
+                  <h5 class="card-category">Pacientes</h5>
                 </template>
 
                 <template>
-                  <h2 class="card-title">Servicios</h2>
+                  <h2 class="card-title">Pacientes</h2>
                 </template>
               </div>
             </div>
@@ -88,12 +88,18 @@ export default {
       
     }
   },
+
   mounted(){
     this.MostrarPatients();
 
   },
 
+  
+
   methods:{
+
+    //metodo para mostrar los Pacientes existentes
+
     MostrarPatients(){
       axios
       .get("http://127.0.0.1:8000/api/patients/v1")

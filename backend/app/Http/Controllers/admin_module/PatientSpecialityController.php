@@ -10,40 +10,40 @@ use Illuminate\Support\Facades\DB;
 
 class PatientSpecialityController extends Controller
 {
-    // Metodo para retornar todos las especialidades de los servicios: 
+    // Metodo para retornar todos las especialidades de los servicios:
     public function index()
     {
         // Realizamos la consulta a la tabla de la DB:
         $model = DB::table('patient_specialities')
 
-                    // Realizamos la consulta a la tabla del modelo 'Patient': 
+                    // Realizamos la consulta a la tabla del modelo 'Patient':
                     ->join('patients', 'patients.id_patient', '=', 'patient_specialities.patient_id')
 
-                    // Realizamos la consulta a la tabla del modelo 'Speciality': 
+                    // Realizamos la consulta a la tabla del modelo 'Speciality':
                     ->join('specialities', 'specialities.id_speciality', '=', 'patient_specialities.speciality_id')
 
-                    // Seleccionamos los campos que se requieren: 
+                    // Seleccionamos los campos que se requieren:
                     ->select('specialities.speciality_name as speciality', 'specialities.description', 'patients.patient_name as patient')
 
-                    // Obtenemos todas las especialidades asociadas a ese servicio: 
+                    // Obtenemos todas las especialidades asociadas a ese servicio:
                     ->get()
 
-                    // Agrupamos por pacientes: 
+                    // Agrupamos por pacientes:
                     ->groupBy('patient');
 
-        // Validamos que existan especialidades asociadas al paciente: 
+        // Validamos que existan especialidades asociadas al paciente:
         if(count($model) != 0){
 
-            // Declaramos el arreglo 'resgisters', para almacenar los grupos con indice numerico: 
+            // Declaramos el arreglo 'resgisters', para almacenar los grupos con indice numerico:
             $registers = [];
 
-            // Iteramos cada grupo, para almacenarlos en el arreglo 'registers': 
+            // Iteramos cada grupo, para almacenarlos en el arreglo 'registers':
             foreach($model as $group){
                 $registers[] = $group;
             }
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'patients-specialities' => $registers], status: 200);
+            return response(content: ['query' => true, 'patientsSpecialities' => $registers], status: 200);
 
         }else{
             // Retornamos el error:
@@ -51,7 +51,7 @@ class PatientSpecialityController extends Controller
         }
     }
 
-    // Metodo para registrar una especialidad a un paciente especifico: 
+    // Metodo para registrar una especialidad a un paciente especifico:
     public function store(Request $request)
     {
         // Si los argumentos contienen caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
@@ -62,24 +62,24 @@ class PatientSpecialityController extends Controller
         if(!empty('patient_name')
         && !empty('speciality_name')){
 
-            // Instanciamos los controladores de los modelos 'Patient' y 'Speciality'. Para validar que existan: 
+            // Instanciamos los controladores de los modelos 'Patient' y 'Speciality'. Para validar que existan:
             $patientController    = new PatientController;
             $specialityController = new SpecialityController;
 
-            // Validamos que existan: 
+            // Validamos que existan:
             $validatePatient    = $patientController->show(patient: $patient_name);
             $validateSpeciality = $specialityController->show(speciality: $speciality_name);
 
-            // Extraemos el contenido de las respuestas de validacion: 
+            // Extraemos el contenido de las respuestas de validacion:
             $contentValidatePatient    = $validatePatient->getOriginalContent();
             $contentValidateSpeciality = $validateSpeciality->getOriginalContent();
 
-            // Si existen, extraemos sus 'id': 
+            // Si existen, extraemos sus 'id':
             if($contentValidatePatient['query']){
 
                 if($contentValidateSpeciality['query']){
 
-                    // Extraemos los id: 
+                    // Extraemos los id:
                     $patient_id     = $contentValidatePatient['patient']['id'];
                     $speciality_id  = $contentValidateSpeciality['speciality']['id'];
 
@@ -89,7 +89,7 @@ class PatientSpecialityController extends Controller
                     // Validamos que no exista el registro en la tabla de la DB:
                     $validatePatientSpeciality = $model->first();
 
-                    // Sino existe, lo registramos: 
+                    // Sino existe, lo registramos:
                     if(!$validatePatientSpeciality){
 
                         try{
@@ -129,43 +129,43 @@ class PatientSpecialityController extends Controller
 
     }
 
-    // Metodo para retornar las especialidades de un paciente especifico: 
+    // Metodo para retornar las especialidades de un paciente especifico:
     public function show($patient)
     {
         // Si el argumento contiene caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
         $patient_name = strtolower($patient);
 
-        // Instanciamos el controlador del modelo 'Patient', para validar que exista: 
-        $patientController = new PatientController; 
+        // Instanciamos el controlador del modelo 'Patient', para validar que exista:
+        $patientController = new PatientController;
 
-        // Validamos que exista: 
+        // Validamos que exista:
         $validatePatient = $patientController->show(patient: $patient_name);
 
-        // Extraemos el contenido de la respuesta de validacion: 
+        // Extraemos el contenido de la respuesta de validacion:
         $contentValidatePatient = $validatePatient->getOriginalContent();
 
-        // Si existe, extraemos su id y  realizamos la consulta a la DB: 
+        // Si existe, extraemos su id y  realizamos la consulta a la DB:
         if($contentValidatePatient['query']){
 
-            // Extraemos el id: 
+            // Extraemos el id:
             $patient_id = $contentValidatePatient['patient']['id'];
 
             // Realizamos la consulta a la tabla de la DB:
             $model = DB::table('patient_specialities')
 
-                        // Filtramos por el paciente: 
+                        // Filtramos por el paciente:
                         ->where('patient_id', $patient_id)
 
-                        // Realizamos la consulta a la tabla del modelo 'Speciality': 
+                        // Realizamos la consulta a la tabla del modelo 'Speciality':
                         ->join('specialities', 'specialities.id_speciality', '=', 'patient_specialities.speciality_id')
 
-                        // Seleccionamos los campos que se requieren: 
+                        // Seleccionamos los campos que se requieren:
                         ->select('specialities.speciality_name', 'specialities.description')
 
-                        // Obtenemos todas las especialidades asociadas a ese paciente: 
+                        // Obtenemos todas las especialidades asociadas a ese paciente:
                         ->get();
 
-            // Validamos que existan especialidades asociadas al paciente: 
+            // Validamos que existan especialidades asociadas al paciente:
             if(count($model) != 0){
 
                 // Retornamos la respuesta:
@@ -183,44 +183,44 @@ class PatientSpecialityController extends Controller
 
     }
 
-    // Metodo para eliminar una especialidad de un paciente especifico: 
+    // Metodo para eliminar una especialidad de un paciente especifico:
     public function destroy($patient, $speciality)
     {
         // Si los argumentos contienen caracteres de tipo mayusculas, los pasamos a minusculas. Para seguir una nomenclatura estandar:
         $patient_name    = strtolower($patient);
         $speciality_name = strtolower($speciality);
 
-        // Instanciamos los controladores de los modelos 'patient' y 'Speciality'. Para validar que existan: 
+        // Instanciamos los controladores de los modelos 'patient' y 'Speciality'. Para validar que existan:
         $patientController    = new PatientController;
         $specialityController = new SpecialityController;
 
-        // Validamos que existan: 
+        // Validamos que existan:
         $validatePatient    = $patientController->show(patient: $patient_name);
         $validateSpeciality = $specialityController->show(speciality: $speciality_name);
 
-        // Extraemos el contenido de las respuestas de validacion: 
+        // Extraemos el contenido de las respuestas de validacion:
         $contentValidatePatient    = $validatePatient->getOriginalContent();
         $contentValidateSpeciality = $validateSpeciality->getOriginalContent();
 
-        // Si existe, extraemos sus id y  realizamos la consulta a la DB: 
+        // Si existe, extraemos sus id y  realizamos la consulta a la DB:
         if($contentValidatePatient['query']){
 
-            // Extraemos los id: 
+            // Extraemos los id:
             $patient_id    = $contentValidatePatient['patient']['id'];
-            $speciality_id = $contentValidateSpeciality['speciality']['id']; 
+            $speciality_id = $contentValidateSpeciality['speciality']['id'];
 
             // Realizamos la consulta a la tabla de la DB:
             $model = PatientSpeciality::where('patient_id', $patient_id)->where('speciality_id', $speciality_id);
 
-            // Validamos que exista esa especialidad asignada al paciente: 
+            // Validamos que exista esa especialidad asignada al paciente:
             $validatePatientSpeciality = $model->first();
 
-            // Validamos que existan especialidades asociadas al paciente: 
+            // Validamos que existan especialidades asociadas al paciente:
             if($validatePatientSpeciality){
 
                 try{
 
-                    // Eliminamos la especialidad: 
+                    // Eliminamos la especialidad:
                     $model->delete();
 
                     // Retornamos la respuesta:

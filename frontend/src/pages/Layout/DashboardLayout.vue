@@ -39,6 +39,13 @@
         </template>
       </sidebar-link>
 
+      <sidebar-link to="/enfermeras">
+        <i class="tim-icons icon-tap-02"></i>
+        <template>
+          <p> Enfermeras</p>
+        </template>
+      </sidebar-link>
+
       <sidebar-link to="/historial">
         <i class="tim-icons icon-shape-star"></i>
         <template>

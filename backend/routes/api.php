@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Modulo de administrador: 
+// Modulo de administrador:
 Route::apiResource(name: '/patients/v1', controller: 'App\Http\Controllers\admin_module\PatientController');
 
 Route::apiResource(name: '/specialities/v1', controller: 'App\Http\Controllers\admin_module\SpecialityController');
@@ -27,14 +27,9 @@ Route::delete(uri: '/delete-patient-specialities/v1/{patient}/{speciality}', act
 Route::apiResource(name: '/nurses/v1', controller: 'App\Http\Controllers\admin_module\NurseController');
 
 Route::apiResource(name: '/roles/v1', controller: 'App\Http\Controllers\admin_module\RoleController');
-<<<<<<< HEAD
+
 Route::get(uri: '/nurses-role/v1/{role}', action: [RoleController::class, 'nurses']);
 
 Route::apiResource(name: '/nurse-specialities/v1', controller: 'App\Http\Controllers\admin_module\NurseSpecialityController');
 Route::delete(uri: '/delete-nurse-specialities/v1/{identification}/{speciality}', action: [NurseSpecialityController::class, 'destroy']);
-=======
-Route::get(uri: '/professionals-role/v1/{role}', action: [RoleController::class, 'professionals']);
 
-Route::apiResource(name: '/nurse-specialities/v1', controller: 'App\Http\Controllers\admin_module\NurseSpecialityController');
-Route::delete(uri: '/delete-nurse-specialities/v1/{identification}/{speciality}', action: [NurseSpecialityController::class, 'destroy']);
->>>>>>> frontend

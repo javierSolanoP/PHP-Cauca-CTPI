@@ -10,6 +10,8 @@ import AsignarServicio from "@/pages/AsignarServicio.vue";
 import AgregarPaciente from "@/pages/AgregarPaciente.vue"
 import AgregarEspecialidad from "@/pages/AgregarEspecialidades.vue"
 import AsignarEspecialidad from "@/pages/AsignarEspecialidad.vue"
+import Addasig from "@/pages/Addasig.vue"
+import Enfermeras from "@/pages/Enfermeras.vue"
 
 const routes = [{
   path: "/",
@@ -20,6 +22,11 @@ const routes = [{
       path: "addppersonal",
       name: " Gestion",
       component: Addppersonal
+    },
+    {
+      path: "addasig",
+      name: " agregarrr",
+      component: Addasig
     },
     {
       path: "dashboard",
@@ -73,9 +80,16 @@ const routes = [{
       path: "asignarEspecialidad",
       name: "Asignar Especialidad",
       component: AsignarEspecialidad
-    }
-  ]
+    },
+    {
+      path: "enfermeras",
+      name: "Enfermeras",
+      component: Enfermeras
+    },
+   
+    enfermeras
 
+  ]
 
 }]
 
