@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "473a9ea939fa0f430201a4e363287922",
+    "content-hash": "9cb2e539283e408b991dfa1357553f7a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1201,44 +1201,6 @@
             "time": "2021-10-06T17:43:30+00:00"
         },
         {
-            "name": "javiersolano/email",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/javierSolanoP/email.git",
-                "reference": "aba37d8ac40800b3751583e30ca75aed9991fa7a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/javierSolanoP/email/zipball/aba37d8ac40800b3751583e30ca75aed9991fa7a",
-                "reference": "aba37d8ac40800b3751583e30ca75aed9991fa7a",
-                "shasum": ""
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Javiersolano\\Email\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "javierSolanoP",
-                    "email": "jsmolano24@misena.edu.co"
-                }
-            ],
-            "description": "Libreria para enviar email",
-            "support": {
-                "issues": "https://github.com/javierSolanoP/email/issues",
-                "source": "https://github.com/javierSolanoP/email/tree/master"
-            },
-            "time": "2021-10-08T19:48:54+00:00"
-        },
-        {
             "name": "laravel/framework",
             "version": "v8.67.0",
             "source": {
@@ -1599,44 +1561,6 @@
                 "source": "https://github.com/laravel/tinker/tree/v2.6.2"
             },
             "time": "2021-09-28T15:47:34+00:00"
-        },
-        {
-            "name": "laravell/users",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/javierSolanoP/user-controller.git",
-                "reference": "28ccb1013e3b017dac61f486b6ff6d4a9c1f5fa2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/javierSolanoP/user-controller/zipball/28ccb1013e3b017dac61f486b6ff6d4a9c1f5fa2",
-                "reference": "28ccb1013e3b017dac61f486b6ff6d4a9c1f5fa2",
-                "shasum": ""
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Laravell\\Users\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "javierSolanoP",
-                    "email": "jsmolano24@misena.edu.co"
-                }
-            ],
-            "description": "Validates users",
-            "support": {
-                "issues": "https://github.com/javierSolanoP/user-controller/issues",
-                "source": "https://github.com/javierSolanoP/user-controller/tree/main"
-            },
-            "time": "2021-10-13T22:53:17+00:00"
         },
         {
             "name": "league/commonmark",
@@ -8469,10 +8393,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "javiersolano/email": 20,
-        "laravell/users": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
