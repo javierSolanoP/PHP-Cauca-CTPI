@@ -25,40 +25,46 @@
         <card class="card">
           <h4 slot="header" class="card-title mb-4">
             <template>
-                <router-link class="btn btn-info agregar" to="/agregarespecialidad">Agregar</router-link>
+              <router-link
+                class="btn btn-info agregar"
+                to="/agregarespecialidad"
+                >Agregar</router-link
+              >
             </template>
           </h4>
 
           <section class="row">
             <div class="col">
               <div class="card">
-                <div class="card-body table-responsive-lg ">
-                   <table class="table table-hover">
+                <div class="card-body table-responsive-lg">
+                  <table class="table table-hover">
                     <thead class="thead-dark">
                       <tr>
                         <th>Nombre de la Esppecialidad</th>
                         <th>Descripcion</th>
-                        <th>Descripcion</th>
-                    
-                        
+                        <!-- <th>Descripcion</th> -->
                       </tr>
                     </thead>
 
                     <tbody>
-
-                      <tr v-for="especialidades in specialities " 
-                      :key="especialidades.speciality_name">
-
-
-                        <td>{{especialidades.speciality_name}}</td>
-                        <td>{{especialidades.description}}</td>
-                        <td>
-                          <button class="btn btn-info agregar">
-                            Editar
+                      <tr
+                        v-for="especialidades in specialities"
+                        :key="especialidades.speciality_name"
+                      >
+                        <td>{{ especialidades.speciality_name }}</td>
+                        <td>{{ especialidades.description }}</td>
+                        <!-- <td>
+                          <button
+                            class="btn btn-danger"
+                            v-on:click="
+                              Eliminar(especialidades.speciality_name)
+                            "
+                          >
+                            Eliminar
                           </button>
-                        </td>
+                        </td> -->
                       </tr>
-                    </tbody> 
+                    </tbody>
                   </table>
                 </div>
               </div>
@@ -71,7 +77,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 import { Card } from "@/components/index";
 
 export default {
@@ -79,38 +85,51 @@ export default {
     Card,
   },
 
-  data(){
-    return{
-      specialities:[],
-      
-    }
+  data() {
+    return {
+      specialities: [],
+      form:{
+        speciality_name:"",
+        description:""
+      }
+    };
   },
-  mounted(){
+  mounted() {
     this.Especialidades();
-
   },
 
-  methods:{
-    //metodo para mostrar las especialidades existentes 
+  methods: {
+    //metodo para mostrar las especialidades existentes
 
-    Especialidades(){
-      axios
-      .get("http://127.0.0.1:8000/api/specialities/v1")
-      .then(datos =>{
-        console.log(datos)
-        this.specialities = datos.data.specialities
-      })
+    Especialidades() {
+      axios.get("http://127.0.0.1:8000/api/specialities/v1")
+      .then((datos) => {
+        console.log(datos);
+        this.specialities = datos.data.specialities;
+      });
     },
-  }
 
+
+
+    Eliminar() {
+
+      var enviar = {
+        "speciality_name": this.form.speciality_name,
+      };
+
+      axios
+        .delete("http://127.0.0.1:8000/api/specialities/v1", {headers: enviar,})
+        .then((data) => {
+          console.log(data);
+          // this.$router.push('/dashboard')
+        });
+      
+    },
+  },
 };
 </script>
 <style  scoped>
-
-
-
-th{
-  color: aliceblue  !important;
+th {
+  color: aliceblue !important;
 }
-
 </style>

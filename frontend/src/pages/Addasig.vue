@@ -11,7 +11,7 @@
                 </template>
 
                 <template>
-                  <h2 class="card-title">Agregar Asignacion</h2>
+                  <h2 class="card-title">Agregar Especialidad a Paciente</h2>
                 </template>
               </div>
             </div>
@@ -137,14 +137,16 @@ export default {
               toast: "true",
             });
             this.$router.push("/asignarEspecialidad");
-          } else {
+          } 
 
-            this.register = true
-            this.error = datos.data.error
-
-
-
-          }
+        }).catch(() => {
+            this.$swal({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'error al Guardar! ',
+              text:"Este Paciente ya tiene esta especialidad "
+            
+            });
         });
     },
 
@@ -196,8 +198,7 @@ $inputColor: #bbbbbb
     transition: all 0.9s cubic-bezier(1.000, -0.375, 0.285, 0.995)
     position: absolute
     top: 0
-    left: -29%
-    width: 130%
+    width: 100%
     overflow: hidden
     &.switched
       transform: translateX(-100%)
@@ -210,7 +211,7 @@ $inputColor: #bbbbbb
     width: 70%
     position: absolute
     top: 50%
-    left: 60%
+    left: 50%
     transform: translate(-50%, -50%)
 
     .form-group

@@ -42,7 +42,7 @@
                         <th>Cantidad de personal</th>
                         <th>Numero de Dias</th>
                         <th>Horas</th>
-                        <th></th>
+                        <!-- <th></th> -->
                       </tr>
                     </thead>
 
@@ -55,9 +55,9 @@
                         <td>{{paciente.personal_amount}}</td>
                         <td>{{paciente.number_of_days}}</td>
                         <td>{{paciente.hourlyintensity}}</td>
-                        <td>
+                        <!-- <td>
                           <button class="btn btn-info agregar"> editar</button>
-                        </td>
+                        </td> -->
 
                       </tr>
 

@@ -30,13 +30,13 @@
                   <form>
                     <div class="form-group">
                       <label for="name">Nombre servicio</label>
-                      <input type="text" v-model="form.speciality_name" />
+                      <input placeholder="*" required type="text" v-model="form.speciality_name" />
                       <span class="error"></span>
                     </div>
 
                     <div class="form-group">
-                      <label for="phone">Numero de Dias</label>
-                      <input type="text" v-model="form.description" />
+                      <label for="phone" >Numero de Dias</label>
+                      <input placeholder="*" required type="text" v-model="form.description" />
                     </div>
 
                     <div class="form-group col-md my-5">
@@ -86,40 +86,38 @@ export default {
         .post("http://127.0.0.1:8000/api/specialities/v1", this.form)
 
         .then((data) => {
-          this.$swal({
-            position: "top-end",
-            title: "se guardó correctamente!!",
-            icon: "success",
-            timer: "2000",
-            toast: "true",
-          });
-          this.$router.push("/especialidades");
           console.log(data);
+
+          if ((data.status == 201)) {
+            this.$swal({
+              position: "top-end",
+              title: "se guardó correctamente!!",
+              icon: "success",
+              timer: "2000",
+              toast: "true",
+            });
+            this.$router.push("/especialidades");
+            
+          } 
+          
+        })
+        .catch(() => {
+             this.$swal({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'error al Guardar!',
+            
+            });
         });
     },
+
+    
   },
 };
 </script>
 
 <style lang="sass" scoped>
-// input {
-//   width: 80px;
-// }
 
-// .agregar{
-
-// background:#11AAB8 !important;
-// }
-
-// .agregar:hover{
-//   background-color: #11AAB8 !important;
-// }
-
-// th{
-//   color: aliceblue  !important;
-// }
-
-// Fonts
 $mainFont: 'Raleway', sans-serif
 $subFont: 'Montserrat', sans-serif
 
@@ -128,79 +126,7 @@ $primaryColor: #f95959
 $secondaryColor: #f7edd5
 $inputColor: #bbbbbb
 
-// General Style
 
-// Brand Area
-.brand
-  padding: 20px
-  background: url(https://goo.gl/A0ynht)
-  background-size: cover
-  background-position: center center
-  color: #fff
-  min-height: 540px
-  position: relative
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3)
-  transition: all 0.6s cubic-bezier(1.000, -0.375, 0.285, 0.995)
-  z-index: 9999
-
-  &.active
-    width: 100%
-
-  &::before
-    content: ''
-    display: block
-    width: 100%
-    height: 100%
-    position: absolute
-    top: 0
-    left: 0
-    background: rgba(0, 0, 0, 0.85)
-    z-index: -1
-  a.logo
-    color: $primaryColor
-    font-size: 20px
-    font-weight: 700
-    text-decoration: none
-    line-height: 1em
-    span
-      font-size: 30px
-      color: #fff
-      transform: translateX(-5px)
-      display: inline-block
-
-  .success-msg
-    width: 100%
-    text-align: center
-    position: absolute
-    top: 50%
-    left: 50%
-    transform: translate(-50%, -50%)
-    margin-top: 60px
-
-    p
-      font-size: 25px
-      font-weight: 400
-      font-family: $mainFont
-
-      a
-        font-size: 12px
-        text-transform: uppercase
-        padding: 8px 30px
-        background: $primaryColor
-        text-decoration: none
-        color: #fff
-        border-radius: 30px
-
-      p, a
-        transition: all 0.9s
-        transform: translateY(20px)
-        opacity: 0
-
-        &.active
-          transform: translateY(0)
-          opacity: 1
-
-// Form Area
 .form
   position: relative
 
@@ -214,8 +140,8 @@ $inputColor: #bbbbbb
     transition: all 0.9s cubic-bezier(1.000, -0.375, 0.285, 0.995)
     position: absolute
     top: 0
-    left: -29%
-    width: 130%
+ 
+    width: 100%
     overflow: hidden
     &.switched
       transform: translateX(-100%)
@@ -228,7 +154,7 @@ $inputColor: #bbbbbb
     width: 70%
     position: absolute
     top: 50%
-    left: 60%
+    left: 50%
     transform: translate(-50%, -50%)
 
     .form-group

@@ -11,7 +11,7 @@
                 </template>
 
                 <template>
-                  <h2 class="card-title">Especialidades</h2>
+                  <h2 class="card-title">Especialidades Pacientes</h2>
                 </template>
               </div>
             </div>
@@ -19,6 +19,8 @@
         </card>
       </div>
     </div>
+
+
 
     <div class="row">
       <div class="col-lg-12 col-md-12">
@@ -40,25 +42,34 @@
                         <th>Nombre Paciente</th>
                         <th>Descripcion</th>
                         <th>Especialidad</th>
-                        <th>Acciones</th>
+                        <!-- <th>Acciones</th> -->
 
                       </tr>
                     </thead>
+
+
 
                     <tbody>
 
                       <tr v-for="especialidade in  patientsSpecialities " 
                       :key="especialidade.patient">
 
-                        <td>{{especialidade.speciality}}</td>
-                        <td>{{especialidade.description}}</td>
                         <td>{{especialidade.patient}}</td>
                         
-                        <td>
-                          <button class="btn btn-info agregar">
-                            Editar
+                        <td>{{especialidade.description}}</td>
+                        <td>{{especialidade.speciality}}</td>
+                        
+                        
+                        <!-- <td>
+                         <button
+                            class="btn btn-danger"
+                            v-on:click="
+                              Eliminar(especialidade.patient)
+                            "
+                          >
+                            Eliminar
                           </button>
-                        </td>
+                        </td> -->
 
                       </tr>
                     </tbody> 
@@ -101,8 +112,8 @@ export default {
       .get("http://127.0.0.1:8000/api/patient-specialities/v1")
       .then(datos =>{
         console.log(datos.data.patientsSpecialities)
-        this.patientsSpecialities = datos.data.patientsSpecialities[0]
-        console.log(this.patientsSpecialities)
+        this.patientsSpecialities = datos.data.patientsSpecialities[2]
+        
         
       })
     },
