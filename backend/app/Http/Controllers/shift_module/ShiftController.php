@@ -33,9 +33,6 @@ class ShiftController extends Controller
            // Retornamos el error:
            return response(content: ['query' => true, 'error' => 'No existen turnos en el sistema.'], status: 404);
         }
-             
-               
-
     }
 
     //meotodo para crear turnos
@@ -69,18 +66,38 @@ class ShiftController extends Controller
                 // $model = Shift::select('schedule_id')->where('schedule_id', $validateScheduleId['id_schedule']);
                 // $validateScheduleIdShift = $model->first();
                 
-                // return $validateScheduleIdShift;
+                
                 //si no existe realizamos el registro
-                if (!$validateScheduleId) {
-                    
+                if (!$validateScheduleId) {                    
                     try {
+                        //realizamos la insercción en las tablas
+                        DB::transaction(function () use($idNurse, $name_turn, $abbrevation_name, $validateScheduleId) {
 
-                        //realizamos el registro en  la tabla 'shifts'
-                        Shift::create([
-                            'name_turn' => $name_turn,
-                            'abbreviation_name' => $abbrevation_name,
-                            'schedule_id' => $validateScheduleId['id_schedule']
-                        ]);
+                            //insertamos un horario por defecto
+                            $schedules = Schedule::create([
+                                'monday' => '1',
+                                'tuesday' => '1',
+                                'wednesday' => '1',
+                                'thursday' => '1',
+                                'friday' => '1',
+                                'saturday' => '1',
+                                'sunday' => '0',
+                                'nurse_id' => $idNurse
+                            ]);
+
+                            //realizamos nuevamente la consulta para obtener el id de la tabla 'schedule'
+                            $model = Schedule::select('id_schedule')->where('nurse_id', $idNurse);
+                            $validateScheduleId = $model->first();
+
+                            //creamos el turno
+                            $shifts = Shift::create([
+                                'name_turn' => $name_turn,
+                                'abbreviation_name' => $abbrevation_name,
+                                'schedule_id' => $validateScheduleId->id_schedule
+                            ]);
+
+
+                        }); 
 
                         //retornamos la respuesta
                         return response(content: ['query' => true], status: 201);
@@ -165,35 +182,7 @@ class ShiftController extends Controller
 
     // }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //metodo para eliminar un turno
     public function destroy($id)
     {
         //
