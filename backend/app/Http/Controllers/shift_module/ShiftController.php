@@ -6,9 +6,11 @@ use App\Http\Controllers\admin_module\NurseController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Shift;
-use App\Model\Nurse;
+use App\Models\Nurse;
+use App\Models\Schedule;
 use Illuminate\Support\Facades\DB;
-
+use Exception;
+use Nette\Schema\Context;
 
 class ShiftController extends Controller
 {
@@ -46,44 +48,73 @@ class ShiftController extends Controller
         //validamos que los argumento no esten vacios
         if (!empty($name_turn) && !empty($abbrevation_name) && !empty($identification)) {
             
-            $shiftController = new ShiftController;
+         
             $nurseController = new NurseController;
 
-
-            $validateNameTurn = $shiftController->show(name_turn: $name_turn);
-            $validateAbbrevationName = $shiftController->show(abbreviation_name: $abbrevation_name);
             $validateIdentification = $nurseController->show(identification: $identification);
 
             //extraemos el contenido de las respuesta
-            $contentValidateNameTurn = $validateNameTurn->getOriginalContent();
-            $contentValidateAbbrevationName  = $validateAbbrevationName->getOriginalContent();
             $contentValidateIdentification = $validateIdentification->getOriginalContent();
 
-            //si existen, extraemos sus id
-            if ($contentValidateNameTurn['query']) {
-                if ($contentValidateAbbrevationName['query']) {
-                    if ($contentValidateIdentification) {
+            //si existen, extraemos sus id    
+            if ($contentValidateIdentification['query']) {
+                
+                //extraemos los id
+                $idNurse = $contentValidateIdentification['nurse']->id;
+                
+                //realizamos la consulda a laa tabla de la bd
+                $model = Schedule::select('id_schedule')->where('nurse_id', $idNurse);
+                
+                $validateScheduleId = $model->first();
+                // return $validateScheduleId;
+                
+                //$model = Schedule::select('id_schedule')->where('id_schedule', $validateScheduleId['id_schedule']);
+                //$validate = $model->first();
+                //return $validateScheduleId;
+
+                //return $validateScheduleId;
+
+                //si no existe realizamos el registro
+                if (!$validateScheduleId) {
+                    
+                    try {
+
+                        //realizamos el registro en  la tabla 'shifts'
+                        Shift::create([
+                            'name_turn' => $name_turn,
+                            'abbreviation_name' => $abbrevation_name,
+                            'schedule_id' => $validateScheduleId['id_schedule']
+                        ]);
+
+                        //retornamos la respuesta
+                        return response(content: ['query' => true], status: 201);
+
+                    } catch (Exception $e) {
                         
-                        //extraemos los id
-                        $nurseId = $contentValidateIdentification['role']->id;
 
-                        
-
-
+                        //retornamos el error
+                        return response(content: ['query' => false, 'error' => $e->getMessage()],  status:500);
                     }
+
+                }else{
+
+                    //retornamos el registro
+                    return response(content: ['register' => false, 'error' => 'ya existe este registro'], status: 403);
                 }
+
             }
+                
 
+        }else{
 
-
-            
-
-
-
-
-
+            //retornamos el error
+            return response(content: ['query' => false, 'error' => 'los campos no deben estar vacios']);
         }
 
+
+    }
+
+    public function show(){
 
     }
 
