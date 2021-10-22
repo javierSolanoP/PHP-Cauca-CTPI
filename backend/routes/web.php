@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\public_module\OrganizationChartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get(uri: '/stream-organization_chart', action: [OrganizationChartController::class, 'stream']);
+Route::get(uri: '/download-organization_chart', action: [OrganizationChartController::class, 'download']);
