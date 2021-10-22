@@ -184,11 +184,11 @@ class NurseController extends Controller
         if($validateNurse){
 
             // Retornamos la respuesta:
-            return response(content: ['query' => true, 'nurse' => $validateNurse], status: 200);
+            return ['query' => true, 'nurse' => $validateNurse];
 
         }else{
             // Retornamos el error:
-            return response(content: ['query' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
+            return ['query' => false, 'error' => 'No existe esa enfermera en el sistema.'];
         }
     }
 
@@ -304,16 +304,16 @@ class NurseController extends Controller
                 $model->update(['session' => $session]);
 
                 // Retornamos la respuesta:
-                return response(content: ['update' => true], status: 204);
+                return ['update' => true];
 
             }catch(Exception $e){
                 // Retornamos el error:
-                return response(content: ['update' => false, 'error' => $e->getMessage()], status: 500);
+                return ['update' => false, 'error' => $e->getMessage()];
             }
 
         }else{
             // Retornamos el error:
-            return response(content: ['update' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
+            return ['update' => false, 'error' => 'No existe esa enfermera en el sistema.'];
         }
     }
 
@@ -335,16 +335,16 @@ class NurseController extends Controller
                 $model->update(['avatar' => $url]);
 
                 // Retornamos la respuesta:
-                return response(content: ['add' => true], status: 204); 
+                ['add' => true]; 
 
             }catch(Exception $e){
                 // Retornamos el error:
-                return response(content: ['add' => false, 'error' => $e->getMessage()], status: 500);
+                ['add' => false, 'error' => $e->getMessage()];
             }
 
         }else{
             // Retornamos el error:
-            return response(content: ['add' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
+            ['add' => false, 'error' => 'No existe esa enfermera en el sistema.'];
         }
     }
 

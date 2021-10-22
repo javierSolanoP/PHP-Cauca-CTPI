@@ -48,3 +48,6 @@ Route::apiResource(name: '/schedules/v1', controller: 'App\Http\Controllers\shif
 Route::get(uri: '/module-assignment/v1', action: [ModulesRolesController::class, 'index']);
 Route::apiResource(name: '/module-assignment/v1', controller: 'App\Http\Controllers\admin_module\ModulesRolesController');
 Route::delete(uri: '/delete-module-assignment/v1/{roleName}/{moduleName}', action: [ModulesRolesController::class, 'destroy']);
+
+// Modulo publico: 
+Route::apiResource(name: '/login/v1', controller: 'App\Http\Controllers\public_module\LoginController');
