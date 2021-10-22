@@ -154,7 +154,7 @@ class ScheduleController extends Controller
                             ->join('nurses', 'nurses.id_nurse', '=', 'schedules.nurse_id')
 
                             // Seleccionamos los campos qure se requiren: 
-                            ->select('schedules.id_schedule as id', 'schedules.monday', 'schedules.tuesday', 'schedules.thursday', 'schedules.friday', 'schedules.saturday', 'schedules.sunday', 'nurses.identification')
+                            ->select('schedules.id_schedule as id', 'schedules.monday', 'schedules.tuesday', 'schedules.thursday', 'schedules.friday', 'schedules.saturday', 'schedules.sunday', 'nurses.id_nurse as id', 'nurses.identification')
 
                             // Obtenemos los registros: 
                             ->get();
