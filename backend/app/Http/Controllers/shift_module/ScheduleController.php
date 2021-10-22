@@ -50,16 +50,25 @@ class ScheduleController extends Controller
     }
 
     // Metodo para registrar un cronograma en la tabla de la DB:
-    public function store(Request $request)
+    public function store(
+        $identification_nurse,
+        $monday = '',
+        $tuesday = '',
+        $wednesday = '',
+        $thursday = '',
+        $friday = '',
+        $saturday = '',
+        $sunday = ''
+    )
     {
         // Validamos que los argumentos no esten vacios:
-        if(!empty($request->input('identification_nurse'))){
+        if(!empty($identification_nurse)){
 
             // Instanciamos el controlador del modelo 'Nurse'. Para validar que exista la enfermera: 
             $nurseController = new NurseController;
 
             // Validamos que exista: 
-            $validateNurse = $nurseController->show(identification: $request->input('identification_nurse'));
+            $validateNurse = $nurseController->show(identification: $identification_nurse);
 
             // Extraemos el contenido de la respuesta: 
             $contentValidateNurse = $validateNurse->getOriginalContent();
@@ -82,13 +91,13 @@ class ScheduleController extends Controller
                     try{
 
                         Schedule::create([
-                            'monday'    => $request->input('monday'),
-                            'tuesday'   => $request->input('tuesday'),
-                            'wednesday' => $request->input('wednesday'),
-                            'thursday'  => $request->input('thursday'),
-                            'friday'    => $request->input('friday'),
-                            'saturday'  => $request->input('saturday'), 
-                            'sunday'    => $request->input('sunday'),
+                            'monday'    => $monday,
+                            'tuesday'   => $tuesday,
+                            'wednesday' => $wednesday,
+                            'thursday'  => $thursday,
+                            'friday'    => $friday,
+                            'saturday'  => $saturday, 
+                            'sunday'    => $sunday,
                             'nurse_id'  => $nurse_id
                         ]);
     
@@ -191,7 +200,16 @@ class ScheduleController extends Controller
     }
 
     // Metodo para actualizar un cronograma especifico: 
-    public function update(Request $request, $identification_nurse)
+    public function update(
+        $identification_nurse,
+        $monday = '',
+        $tuesday = '',
+        $wednesday = '',
+        $thursday = '',
+        $friday = '',
+        $saturday = '',
+        $sunday = ''
+    )
     {
         // Validamos que los argumentos no esten vacios:
         if(!empty($identification_nurse)){
@@ -223,13 +241,13 @@ class ScheduleController extends Controller
                     try{
 
                         $model->update([
-                            'monday'    => $request->input('monday'),
-                            'tuesday'   => $request->input('tuesday'),
-                            'wednesday' => $request->input('wednesday'),
-                            'thursday'  => $request->input('thursday'),
-                            'friday'    => $request->input('friday'),
-                            'saturday'  => $request->input('saturday'), 
-                            'sunday'    => $request->input('sunday')
+                            'monday'    => $monday,
+                            'tuesday'   => $tuesday,
+                            'wednesday' => $wednesday,
+                            'thursday'  => $thursday,
+                            'friday'    => $friday,
+                            'saturday'  => $saturday, 
+                            'sunday'    => $sunday
                         ]);
     
                         // Retornamos la respuesta:
