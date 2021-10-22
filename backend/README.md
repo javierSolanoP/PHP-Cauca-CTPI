@@ -28,3 +28,18 @@ Por ultimo, debe migrar las entidades que requiere la base de datos con el sigui
 php artisan migrate
 ´´´
 
+## USAR EL SMTP DE MAILER
+
+Para poder hacer uso del servicio de emails, deberá tener la siguiente configuracion en las variables de entorno del archivo '.env': 
+
+´´´
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.googlemail.com
+MAIL_PORT=465
+MAIL_USERNAME=example@gmail.com
+MAIL_PASSWORD=password
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS=fedesoft_health@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"
+´´´
+
