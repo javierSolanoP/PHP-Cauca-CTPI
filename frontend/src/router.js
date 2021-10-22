@@ -12,6 +12,8 @@ import AgregarEspecialidad from "@/pages/AgregarEspecialidades.vue"
 import AsignarEspecialidad from "@/pages/AsignarEspecialidad.vue"
 import Addasig from "@/pages/Addasig.vue"
 import Enfermeras from "@/pages/Enfermeras.vue"
+import AgregarEnfermeras from "@/pages/AgregarEnfermeras.vue"
+import EditarEspecialidad from "@/pages/EditarEspecialidad.vue"
 
 const routes = [{
   path: "/",
@@ -85,6 +87,16 @@ const routes = [{
       path: "enfermeras",
       name: "Enfermeras",
       component: Enfermeras
+    },
+    {
+      path: "agregarenfermeras",
+      name: "Agregar Enfermeras",
+      component: AgregarEnfermeras
+    },
+    {
+      path: "editarEspecialidad",
+      name: "editarEspecialidad",
+      component: EditarEspecialidad
     },
    
 

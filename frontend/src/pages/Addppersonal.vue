@@ -38,18 +38,19 @@
                 <div class="card-body">
                   <form class="row">
                     <div class="form-group col-md-4">
-                      <label for="">Servicio</label>
+                      <label for="">Pacientes</label>
+
                       <select  class="form-select"
                         aria-label="Default select example">
                         <option 
                         
-                        v-for="servicios in services"
-                           :key="servicios.service_name"
+                         v-for="paciente in patients"
+                          :key="paciente.patient_name"
                            
-                           
-
-                       >{{servicios.service_name}}</option>
+                       >{{paciente.patient_name}}</option>
                       </select>
+                      
+
                     </div>
 
 
@@ -61,19 +62,22 @@
                         aria-label="Default select example"
                       >
 
-                        <option value="2">fffff</option>
+                        <option v-for="especialidades in specialities"
+                        :key="especialidades.speciality_name">
+                        {{ especialidades.speciality_name }}
+                        </option>
                       </select>
                     </div>
 
 
-                    
                     <div class="form-group col-md-2 text-center ">
                       <router-link class="btn btn-info agregar my-3" to="/asignarServicio">Agregar</router-link>
                     </div>
 
+
                     <div class="form-group col-md-2 text-center ">
                       <div >
-                      <div > Aforo</div>
+                      <div> Enfermeras </div>
                       <h1>2</h1>
                       </div>
                     </div>
@@ -169,27 +173,35 @@ import axios from "axios"
 export default {
   components:{
     Card,
+
   
   },
 
   data(){
     return{
       services:[],
-      services_specialities:[],
+      patients:[],
+      patientsSpecialities:[],
+      specialities: [],
     }
   },
   mounted(){
-    this.MostrarServicios();
+
+    this.MostrarPatients();
     this.MostrarProfecionesDeServicios();
+    this.MostrarEspecialidadPaciente();
+    this. MostrarEspecialidades();
+
   },
 
   methods:{
-    MostrarServicios(){
+
+    MostrarPatients(){
       axios
-      .get("http://127.0.0.1:8000/api/services/v1")
+      .get("http://127.0.0.1:8000/api/patients/v1")
       .then(datos =>{
         console.log(datos)
-        this.services = datos.data.services
+        this.patients = datos.data.patients
       })
     },
 
@@ -198,8 +210,26 @@ export default {
       .get("http://127.0.0.1:8000/api/service-specialities/v1")
       .then(datos =>{
         console.log(datos)
-        this.services_specialities =datos.data.services_specialities
+        this.services_specialities = datos.data.services_specialities
       })
+    },
+
+    MostrarEspecialidadPaciente(){
+      axios("http://127.0.0.1:8000/api/patient-specialities/v1")
+      .then(datos =>{
+        console.log(datos)
+        this.patientsSpecialities = datos.data.patientsSpecialities
+      })
+    },
+    
+    MostrarEspecialidades(){
+
+       axios.get("http://127.0.0.1:8000/api/specialities/v1")
+      .then((datos) => {
+        console.log(datos);
+        this.specialities = datos.data.specialities;
+      });
+
     }
     
 

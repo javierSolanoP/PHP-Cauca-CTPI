@@ -196,8 +196,7 @@ $inputColor: #bbbbbb
     transition: all 0.9s cubic-bezier(1.000, -0.375, 0.285, 0.995)
     position: absolute
     top: 0
-    left: -29%
-    width: 130%
+    width: 100%
     overflow: hidden
     &.switched
       transform: translateX(-100%)
@@ -210,7 +209,7 @@ $inputColor: #bbbbbb
     width: 70%
     position: absolute
     top: 50%
-    left: 60%
+    left: 50%
     transform: translate(-50%, -50%)
 
     .form-group
