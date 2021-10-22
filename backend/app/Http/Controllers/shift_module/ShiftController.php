@@ -6,9 +6,11 @@ use App\Http\Controllers\admin_module\NurseController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Shift;
-use App\Model\Nurse;
+use App\Models\Nurse;
+use App\Models\Schedule;
 use Illuminate\Support\Facades\DB;
-
+use Exception;
+use Nette\Schema\Context;
 
 class ShiftController extends Controller
 {
@@ -31,9 +33,6 @@ class ShiftController extends Controller
            // Retornamos el error:
            return response(content: ['query' => true, 'error' => 'No existen turnos en el sistema.'], status: 404);
         }
-             
-               
-
     }
 
     //meotodo para crear turnos
@@ -46,45 +45,90 @@ class ShiftController extends Controller
         //validamos que los argumento no esten vacios
         if (!empty($name_turn) && !empty($abbrevation_name) && !empty($identification)) {
             
-            $shiftController = new ShiftController;
+         
             $nurseController = new NurseController;
 
-
-            $validateNameTurn = $shiftController->show(name_turn: $name_turn);
-            $validateAbbrevationName = $shiftController->show(abbreviation_name: $abbrevation_name);
             $validateIdentification = $nurseController->show(identification: $identification);
 
             //extraemos el contenido de las respuesta
-            $contentValidateNameTurn = $validateNameTurn->getOriginalContent();
-            $contentValidateAbbrevationName  = $validateAbbrevationName->getOriginalContent();
             $contentValidateIdentification = $validateIdentification->getOriginalContent();
 
-            //si existen, extraemos sus id
-            if ($contentValidateNameTurn['query']) {
-                if ($contentValidateAbbrevationName['query']) {
-                    if ($contentValidateIdentification) {
+            //si existen, extraemos sus id    
+            if ($contentValidateIdentification['query']) {
+                
+                //extraemos los id
+                $idNurse = $contentValidateIdentification['nurse']->id;
+                
+                //realizamos la consulta a la tabla de la bd
+                $model = Schedule::select('id_schedule')->where('nurse_id', $idNurse);
+                $validateScheduleId = $model->first();
+
+                // $model = Shift::select('schedule_id')->where('schedule_id', $validateScheduleId['id_schedule']);
+                // $validateScheduleIdShift = $model->first();
+                
+                
+                //si no existe realizamos el registro
+                if (!$validateScheduleId) {                    
+                    try {
+                        //realizamos la insercción en las tablas
+                        DB::transaction(function () use($idNurse, $name_turn, $abbrevation_name, $validateScheduleId) {
+
+                            //insertamos un horario por defecto
+                            $schedules = Schedule::create([
+                                'monday' => '1',
+                                'tuesday' => '1',
+                                'wednesday' => '1',
+                                'thursday' => '1',
+                                'friday' => '1',
+                                'saturday' => '1',
+                                'sunday' => '0',
+                                'nurse_id' => $idNurse
+                            ]);
+
+                            //realizamos nuevamente la consulta para obtener el id de la tabla 'schedule'
+                            $model = Schedule::select('id_schedule')->where('nurse_id', $idNurse);
+                            $validateScheduleId = $model->first();
+
+                            //creamos el turno
+                            $shifts = Shift::create([
+                                'name_turn' => $name_turn,
+                                'abbreviation_name' => $abbrevation_name,
+                                'schedule_id' => $validateScheduleId->id_schedule
+                            ]);
+
+
+                        }); 
+
+                        //retornamos la respuesta
+                        return response(content: ['query' => true], status: 201);
+
+                    } catch (Exception $e) {
                         
-                        //extraemos los id
-                        $nurseId = $contentValidateIdentification['role']->id;
 
-                        
-
-
+                        //retornamos el error
+                        return response(content: ['query' => false, 'error' => $e->getMessage()],  status:500);
                     }
+
+                }else{
+
+                    //retornamos el registro
+                    return response(content: ['register' => false, 'error' => 'ya existe este registro'], status: 403);
                 }
+
             }
+                
 
+        }else{
 
-
-            
-
-
-
-
-
+            //retornamos el error
+            return response(content: ['query' => false, 'error' => 'los campos no deben estar vacios']);
         }
 
 
+    }
+
+    public function show(){
+        
     }
 
     //metodo para retornar los turnos y sus horarios
@@ -138,35 +182,7 @@ class ShiftController extends Controller
 
     // }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //metodo para eliminar un turno
     public function destroy($id)
     {
         //
