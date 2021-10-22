@@ -128,7 +128,7 @@ class ShiftController extends Controller
     }
 
     public function show(){
-
+        
     }
 
     //metodo para retornar los turnos y sus horarios
