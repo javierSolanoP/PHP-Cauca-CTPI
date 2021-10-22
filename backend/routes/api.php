@@ -33,16 +33,22 @@ Route::delete(uri: '/delete-nurse-specialities/v1/{identification}/{speciality}'
 
 
 
+
 // Modulo de pacientes:
 Route::apiResource(name: '/patients/v1', controller: 'App\Http\Controllers\patient_module\PatientController');
 
+
+
 Route::apiResource(name: '/patient-specialities/v1', controller: 'App\Http\Controllers\patient_module\PatientSpecialityController');
 Route::delete(uri: '/delete-patient-specialities/v1/{patient}/{speciality}', action: [PatientSpecialityController::class, 'destroy']);
+
+
 
 // Modulo de turnos:
 Route::apiResource(name: '/times/v1', controller: 'App\Http\Controllers\shift_module\TimeController');
 Route::get(uri: '/times/v1/{start_time}/{finish_time}', action : [TimeController::class, 'show']);
 Route::delete(uri: '/times/v1/{start_time}/{finish_time}', action : [TimeController::class, 'destroy']);
+
 
 
 
