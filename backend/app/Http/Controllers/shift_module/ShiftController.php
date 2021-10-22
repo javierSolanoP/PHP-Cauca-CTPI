@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\shift_module;
 
+use App\Http\Controllers\admin_module\NurseController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Shift;
+use App\Model\Nurse;
 use Illuminate\Support\Facades\DB;
 
 
@@ -39,13 +41,45 @@ class ShiftController extends Controller
         //converitmos los argumentos a minusculas
         $name_turn = strtolower($request->input('name_turn'));
         $abbrevation_name = strtolower($request->input('abbrevation_name'));
-        $id_schedule = $request->input('schedules');
+        $identification = $request->input('identification');
 
         //validamos que los argumento no esten vacios
-        if (!empty($name_turn) && !empty($abbrevation_name) && !empty($id_schedule)) {
+        if (!empty($name_turn) && !empty($abbrevation_name) && !empty($identification)) {
             
-            //validamos que los argumentos
+            $shiftController = new ShiftController;
+            $nurseController = new NurseController;
+
+
+            $validateNameTurn = $shiftController->show(name_turn: $name_turn);
+            $validateAbbrevationName = $shiftController->show(abbreviation_name: $abbrevation_name);
+            $validateIdentification = $nurseController->show(identification: $identification);
+
+            //extraemos el contenido de las respuesta
+            $contentValidateNameTurn = $validateNameTurn->getOriginalContent();
+            $contentValidateAbbrevationName  = $validateAbbrevationName->getOriginalContent();
+            $contentValidateIdentification = $validateIdentification->getOriginalContent();
+
+            //si existen, extraemos sus id
+            if ($contentValidateNameTurn['query']) {
+                if ($contentValidateAbbrevationName['query']) {
+                    if ($contentValidateIdentification) {
+                        
+                        //extraemos los id
+                        $nurseId = $contentValidateIdentification['role']->id;
+
+                        
+
+
+                    }
+                }
+            }
+
+
+
             
+
+
+
 
 
         }
