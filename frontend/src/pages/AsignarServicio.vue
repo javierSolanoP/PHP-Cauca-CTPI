@@ -29,15 +29,17 @@
                 <div class=" cardcol-sm-6 form">
                   <div class=" form-peice">
                     <form>
+
+
                       <div class="form-group">
                         <label for="name">Nombre</label>
-                        <input type="text" v-model="form.name" />
+                        <input placeholder="*" required type="text" v-model="form.name" />
                         <span class="error"></span>
                       </div>
 
                       <div class="form-group">
                         <label >Apellidos</label>
-                        <input type="text" v-model="form.last_name" />
+                        <input placeholder="*" required  type="text" v-model="form.last_name" />
                         <span class="error"></span>
                       </div>
 
@@ -117,15 +119,17 @@ export default {
             this.$router.push("/enfermeras");
           } else {
 
-            this.$swal({
-              position: "top-end",
-              title: "no se guardó correctamente!!",
-              icon: "success",
-              timer: "2000",
-              toast: "true",
-            });
           }
+        })
+        .catch(() => {
+            this.$swal({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'error al Guardar!',
+            
+            });
         });
+        
     },
   },
 

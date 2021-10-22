@@ -35,9 +35,10 @@
       <sidebar-link to="/asignarEspecialidad">
         <i class="tim-icons icon-tap-02"></i>
         <template>
-          <p> Asignar Especialidad </p>
+          <p>Esp. Paciente</p>
         </template>
       </sidebar-link>
+      
 
       <sidebar-link to="/enfermeras">
         <i class="tim-icons icon-tap-02"></i>
@@ -46,10 +47,19 @@
         </template>
       </sidebar-link>
 
-      <sidebar-link to="/historial">
+      <sidebar-link to="/espenfermeras">
+        <i class="tim-icons icon-tap-02"></i>
+        <template>
+          <p>Esp. Enfermeras</p>
+        </template>
+      </sidebar-link>
+
+      
+
+      <sidebar-link to="/horarios">
         <i class="tim-icons icon-shape-star"></i>
         <template>
-          <p> Historial</p>
+          <p> Horarios</p>
         </template>
       </sidebar-link>
 

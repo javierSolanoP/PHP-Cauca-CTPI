@@ -42,7 +42,7 @@
                       <tr>
                         <th>Nombre de la Esppecialidad</th>
                         <th>Descripcion</th>
-                        <th>Descripcion</th>
+                        <!-- <th>Descripcion</th> -->
                       </tr>
                     </thead>
 
@@ -53,7 +53,7 @@
                       >
                         <td>{{ especialidades.speciality_name }}</td>
                         <td>{{ especialidades.description }}</td>
-                        <td>
+                        <!-- <td>
                           <button
                             class="btn btn-danger"
                             v-on:click="
@@ -62,7 +62,7 @@
                           >
                             Eliminar
                           </button>
-                        </td>
+                        </td> -->
                       </tr>
                     </tbody>
                   </table>

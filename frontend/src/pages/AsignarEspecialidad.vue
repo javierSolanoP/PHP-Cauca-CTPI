@@ -11,7 +11,7 @@
                 </template>
 
                 <template>
-                  <h2 class="card-title">Especialidades</h2>
+                  <h2 class="card-title">Especialidades Pacientes</h2>
                 </template>
               </div>
             </div>
@@ -42,7 +42,7 @@
                         <th>Nombre Paciente</th>
                         <th>Descripcion</th>
                         <th>Especialidad</th>
-                        <th>Acciones</th>
+                        <!-- <th>Acciones</th> -->
 
                       </tr>
                     </thead>
@@ -55,11 +55,12 @@
                       :key="especialidade.patient">
 
                         <td>{{especialidade.patient}}</td>
-                        <td>{{especialidade.speciality}}</td>
+                        
                         <td>{{especialidade.description}}</td>
+                        <td>{{especialidade.speciality}}</td>
                         
                         
-                        <td>
+                        <!-- <td>
                          <button
                             class="btn btn-danger"
                             v-on:click="
@@ -68,7 +69,7 @@
                           >
                             Eliminar
                           </button>
-                        </td>
+                        </td> -->
 
                       </tr>
                     </tbody> 

@@ -30,13 +30,13 @@
                   <form>
                     <div class="form-group">
                       <label for="name">Nombre servicio</label>
-                      <input type="text" v-model="form.speciality_name" />
+                      <input placeholder="*" required type="text" v-model="form.speciality_name" />
                       <span class="error"></span>
                     </div>
 
                     <div class="form-group">
-                      <label for="phone">Numero de Dias</label>
-                      <input type="text" v-model="form.description" />
+                      <label for="phone" >Numero de Dias</label>
+                      <input placeholder="*" required type="text" v-model="form.description" />
                     </div>
 
                     <div class="form-group col-md my-5">
@@ -86,17 +86,32 @@ export default {
         .post("http://127.0.0.1:8000/api/specialities/v1", this.form)
 
         .then((data) => {
-          this.$swal({
-            position: "top-end",
-            title: "se guardó correctamente!!",
-            icon: "success",
-            timer: "2000",
-            toast: "true",
-          });
-          this.$router.push("/especialidades");
           console.log(data);
+
+          if ((data.status == 201)) {
+            this.$swal({
+              position: "top-end",
+              title: "se guardó correctamente!!",
+              icon: "success",
+              timer: "2000",
+              toast: "true",
+            });
+            this.$router.push("/especialidades");
+            
+          } 
+          
+        })
+        .catch(() => {
+             this.$swal({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'error al Guardar!',
+            
+            });
         });
     },
+
+    
   },
 };
 </script>

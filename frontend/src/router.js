@@ -14,6 +14,10 @@ import Addasig from "@/pages/Addasig.vue"
 import Enfermeras from "@/pages/Enfermeras.vue"
 import AgregarEnfermeras from "@/pages/AgregarEnfermeras.vue"
 import EditarEspecialidad from "@/pages/EditarEspecialidad.vue"
+import Horarios from "@/pages/Horarios.vue"
+import AgregarHorario from "@/pages/AgregarHorario.vue"
+import EspEnfermeras from "@/pages/EspEnfermeras.vue"
+import AsigEnfermeras from "@/pages/AsigEnfermeras.vue"
 
 const routes = [{
   path: "/",
@@ -89,17 +93,37 @@ const routes = [{
       component: Enfermeras
     },
     {
+      path: "espenfermeras",
+      name: "Esp Enfermeras",
+      component: EspEnfermeras
+    },
+    {
       path: "agregarenfermeras",
       name: "Agregar Enfermeras",
       component: AgregarEnfermeras
+    },
+    {
+      path: "asigEnfermeras",
+      name: "Especialidad a Enfermeras",
+      component: AsigEnfermeras
     },
     {
       path: "editarEspecialidad",
       name: "editarEspecialidad",
       component: EditarEspecialidad
     },
+    {
+      path: "horarios",
+      name: "horarios",
+      component: Horarios
+    },
+    {
+      path: "agregarhorario",
+      name: "Agregar Horarios",
+      component: AgregarHorario
+    },
+    
    
-
   ]
 
 }]

@@ -7,11 +7,11 @@
             <div class="row">
               <div class="col-sm-6">
                 <template>
-                  <h5 class="card-category">Servicios</h5>
+                  <h5 class="card-category">Pacientes</h5>
                 </template>
 
                 <template>
-                  <h2 class="card-title">Agregar Servicio</h2>
+                  <h2 class="card-title">Agregar Pacientes</h2>
                 </template>
               </div>
             </div>
@@ -30,31 +30,34 @@
                   <div class=" form-peice">
                     <form>
                       <div class="form-group">
-                        <label for="name">Nombre servicio</label>
-                        <input type="text" v-model="form.patient_name" />
+                        <label for="name">Nombre Paciente</label>
+                        <input required placeholder="*" type="text" v-model="form.patient_name" />
                         <span class="error"></span>
                       </div>
 
                       <div class="form-group">
                         <label >Cantidad de Personal</label>
-                        <input type="text" v-model="form.personal_amount" />
+                        <input required placeholder="*" type="text" v-model="form.personal_amount" />
                         <span class="error"></span>
                       </div>
 
                       <div class="form-group">
                         <label for="phone">Numero de Dias</label>
-                        <input type="text" v-model="form.number_of_days" />
+                        <input required placeholder="*" type="text" v-model="form.number_of_days" />
                       </div>
 
                       <div class="form-group">
                         <label for="password">Horas</label>
                         <input
+                        required
+                        placeholder="*"
                           type="text"
                           class="pass"
                           v-model="form.hourlyintensity"
                         />
                         <span class="error"></span>
                       </div>
+
 
                       <div class="form-group col-md my-5">
                         <button
@@ -118,6 +121,15 @@ export default {
             this.$router.push("/pacientes");
           } else {
           }
+        })
+         .catch(() => {
+
+             this.$swal({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'error al Guardar!',
+            
+            });
         });
     },
   },

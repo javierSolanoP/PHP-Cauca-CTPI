@@ -11,7 +11,7 @@
                 </template>
 
                 <template>
-                  <h2 class="card-title">Programar Servicio</h2>
+                  <h2 class="card-title">Programar Paciente</h2>
                 </template>
               </div>
             </div>
@@ -78,7 +78,7 @@
                     <div class="form-group col-md-2 text-center ">
                       <div >
                       <div> Enfermeras </div>
-                      <h1>2</h1>
+                      <h1>1</h1>
                       </div>
                     </div>
                     

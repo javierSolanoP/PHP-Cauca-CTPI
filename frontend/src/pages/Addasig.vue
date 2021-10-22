@@ -11,7 +11,7 @@
                 </template>
 
                 <template>
-                  <h2 class="card-title">Agregar Asignacion</h2>
+                  <h2 class="card-title">Agregar Especialidad a Paciente</h2>
                 </template>
               </div>
             </div>
@@ -137,14 +137,16 @@ export default {
               toast: "true",
             });
             this.$router.push("/asignarEspecialidad");
-          } else {
+          } 
 
-            this.register = true
-            this.error = datos.data.error
-
-
-
-          }
+        }).catch(() => {
+            this.$swal({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'error al Guardar! ',
+              text:"Este Paciente ya tiene esta especialidad "
+            
+            });
         });
     },
 

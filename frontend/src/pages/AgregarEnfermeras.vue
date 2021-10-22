@@ -31,24 +31,35 @@
                     <form>
                       <div class="form-group">
                         <label for="name">Nombre</label>
-                        <input type="text" v-model="form.name" />
+                        <input placeholder="*" required type="text" v-model="form.name" />
                         <span class="error"></span>
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group my-5">
                         <label >Apellidos</label>
-                        <input type="text" v-model="form.last_name" />
+                        <input required placeholder="*" type="text" v-model="form.last_name" />
                         <span class="error"></span>
                       </div>
 
+                      <label for="phone">rol</label>
+                      <select name=""  id="" class="form-control" v-model="form.role" required>
+                        <!-- <option disabled selected>Seleccione un rol</option> -->
+                        <option v-for="rol in roles" :key="rol" :value="rol.role">{{rol.role}}</option>
+
+                      </select>
+
                       <div class="form-group">
-                        <label for="phone">rol</label>
-                        <input type="text" v-model="form.role" />
+              
+                        <input placeholder="*" required type="text" v-model="form.role" />
                       </div>
+
+                      
 
                       <div class="form-group">
                         <label for="password">Identificacion</label>
                         <input
+                        placeholder="*"
+                        required
                           type="text"
                           class="pass"
                           v-model="form.identification"
@@ -57,8 +68,9 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="password">Imail</label>
+                        <label for="password">Email</label>
                         <input
+                        placeholder="*"
                           type="email"
                           class="pass"
                           v-model="form.email"
@@ -68,6 +80,7 @@
                        <div class="form-group">
                         <label for="password">Contraseña</label>
                         <input
+                        placeholder="*"
                           type="password"
                           class="pass"
                           v-model="form.password"
@@ -75,8 +88,12 @@
                         <span class="error"></span>
                       </div>
                        <div class="form-group">
-                        <label for="password">Confirmar Contraseña</label>
+                        <label 
+                        
+                        for="password">Confirmar Contraseña</label>
                         <input
+                        placeholder="*"
+                        required
                           type="password"
                           class="pass"
                           v-model="form.confirmPassword"
@@ -97,7 +114,7 @@
                 </div>
               </div>
             </section>
-
+          <!-- {{roles}} -->
         </div>
       </div>
     </section>
@@ -119,6 +136,7 @@ export default {
 
   data() {
     return {
+      roles:[],
       error:"",
       
       form: {
@@ -132,6 +150,10 @@ export default {
 
       },
     };
+  },
+  mounted(){
+    this.MostraRoles();
+
   },
 
   methods: {
@@ -150,18 +172,31 @@ export default {
               toast: "true",
             });
             this.$router.push("/enfermeras");
-          } else {
-
+            
+          } 
+        })
+        .catch(() => {
             this.$swal({
-              position: "top-end",
-              title: "no se guardó correctamente!!",
-              icon: "success",
-              timer: "2000",
-              toast: "true",
+              icon: 'error',
+              title: 'Oops...',
+              text: 'error al Guardar!',
+            
             });
-          }
         });
     },
+
+MostraRoles(){
+  axios
+      .get("http://127.0.0.1:8000/api/roles/v1")
+      .then(datos =>{
+        console.log(datos)
+        this.roles = datos.data.roles
+      })
+
+}
+
+
+
   },
 
   obtenerDocumento(event) {
@@ -200,6 +235,8 @@ export default {
     }
   },
 };
+
+
 </script>
 <style lang="sass" scoped>
 
