@@ -29,7 +29,6 @@ Route::get(uri: '/nurses-role/v1/{role}', action: [RoleController::class, 'nurse
 Route::apiResource(name: '/nurse-specialities/v1', controller: 'App\Http\Controllers\admin_module\NurseSpecialityController');
 Route::delete(uri: '/delete-nurse-specialities/v1/{identification}/{speciality}', action: [NurseSpecialityController::class, 'destroy']);
 
-
 // Modulo de pacientes: 
 Route::apiResource(name: '/patients/v1', controller: 'App\Http\Controllers\patient_module\PatientController');
 
