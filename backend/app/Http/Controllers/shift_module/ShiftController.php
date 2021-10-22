@@ -62,18 +62,14 @@ class ShiftController extends Controller
                 //extraemos los id
                 $idNurse = $contentValidateIdentification['nurse']->id;
                 
-                //realizamos la consulda a laa tabla de la bd
+                //realizamos la consulta a la tabla de la bd
                 $model = Schedule::select('id_schedule')->where('nurse_id', $idNurse);
-                
                 $validateScheduleId = $model->first();
-                // return $validateScheduleId;
+
+                // $model = Shift::select('schedule_id')->where('schedule_id', $validateScheduleId['id_schedule']);
+                // $validateScheduleIdShift = $model->first();
                 
-                //$model = Schedule::select('id_schedule')->where('id_schedule', $validateScheduleId['id_schedule']);
-                //$validate = $model->first();
-                //return $validateScheduleId;
-
-                //return $validateScheduleId;
-
+                // return $validateScheduleIdShift;
                 //si no existe realizamos el registro
                 if (!$validateScheduleId) {
                     
