@@ -42,3 +42,7 @@ Route::get(uri: '/times/v1/{start_time}/{finish_time}', action : [TimeController
 Route::delete(uri: '/times/v1/{start_time}/{finish_time}', action : [TimeController::class, 'destroy']);
 
 Route::apiResource(name: '/schedules/v1', controller: 'App\Http\Controllers\shift_module\ScheduleController');
+
+Route::get(uri: '/module-assignment/v1', action: [ModulesRolesController::class, 'index']);
+Route::apiResource(name: '/module-assignment/v1', controller: 'App\Http\Controllers\admin_module\ModulesRolesController');
+Route::delete(uri: '/delete-module-assignment/v1/{roleName}/{moduleName}', action: [ModulesRolesController::class, 'destroy']);
