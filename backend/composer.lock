@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ded482b0b4cf104b288521a0b2f5d7bb",
+    "content-hash": "473a9ea939fa0f430201a4e363287922",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1199,6 +1199,44 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "javiersolano/email",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/javierSolanoP/email.git",
+                "reference": "aba37d8ac40800b3751583e30ca75aed9991fa7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/javierSolanoP/email/zipball/aba37d8ac40800b3751583e30ca75aed9991fa7a",
+                "reference": "aba37d8ac40800b3751583e30ca75aed9991fa7a",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Javiersolano\\Email\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "javierSolanoP",
+                    "email": "jsmolano24@misena.edu.co"
+                }
+            ],
+            "description": "Libreria para enviar email",
+            "support": {
+                "issues": "https://github.com/javierSolanoP/email/issues",
+                "source": "https://github.com/javierSolanoP/email/tree/master"
+            },
+            "time": "2021-10-08T19:48:54+00:00"
         },
         {
             "name": "laravel/framework",
@@ -8432,6 +8470,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "javiersolano/email": 20,
         "laravell/users": 20
     },
     "prefer-stable": true,

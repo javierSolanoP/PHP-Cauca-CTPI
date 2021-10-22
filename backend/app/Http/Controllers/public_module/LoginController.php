@@ -4,6 +4,8 @@ namespace App\Http\Controllers\public_module;
 
 use App\Http\Controllers\admin_module\NurseController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Require\Class\Nurse;
+use Exception;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -28,183 +30,176 @@ class LoginController extends Controller
         //Instanciamos el controlador del modelo 'Nurse'. Para validar la existencia de la enfermera y actualizar sus estados de sesion y contrasenia: 
         $nursesController = new NurseController;
 
-        $nurse =  $nursesController->login(email: $request->input('email'));
+        // Validamos que exista la enfermera: 
+        $validateNurse = $nursesController->login(email: $request->input('email'));
 
-        return ['response' => $nurse['nurse']];
+        // Si existe, recibimos la peticion correspondiente: 
+        if($validateNurse['query']){
 
-        // //Validamos que exista el usuario en la DB: 
-        // $validateUser = $usersController->show(email: $request->input(key: 'email'));
+            switch($form){
 
-        // switch($form){
+                case $login: 
 
-        //     case $login: 
+                    //Estado de sesion: 
+                    //-----------------
+                    //Sesion inactiva: 
+                    static $inactive = 'Inactiva';
+                    //Sesion activa: 
+                    static $active   = 'Activa';
+                    //Sesion pendiente: 
+                    static $pending  = 'Pendiente';
 
-        //        //Si existe, extraemos su estado de sesion actual: 
-        //        if($validateUser['Query']){
+                    if($validateNurse['nurse']->session == $inactive){
 
-        //             //Estado de sesion: 
-        //             //-----------------
-        //             //Sesion inactiva: 
-        //             static $inactive = 'Inactiva';
-        //             //Sesion activa: 
-        //             static $active   = 'Activa';
-        //             //Sesion pendiente: 
-        //             static $pending  = 'Pendiente';
+                        //Realizamos la actualizacion del estado de la sesion: 
+                        $nursesController->updateSession(email: $request->input(key: 'email'),
+                                                                session: $active);
 
-        //             if($validateUser['User']['sesion'] == $inactive){
+                        //Realizamos una nueva consulta al controlador de 'Usuarios', para cargar el nuevo estado de sesion: 
+                        $nurse = $nursesController->login(email: $request->input(key: 'email'));
+                        
+                        //Retornamos la respuesta: 
+                        return response(content: ['login' => true, 'nurse' => $nurse['nurse']], status: 200);
 
-        //                 //Realizamos la actualizacion del estado de la sesion: 
-        //                 $usersController->updateSession(email: $request->input(key: 'email'),
-        //                                                 session: $active);
+                    }elseif($validateNurse['nurse']->session == $active){
+                        //Retornamos el error: 
+                        return response(content: ['login' => false, 'Error' => 'Esta enfermera ya inicio sesion en el sistema.'], status: 403);
+                                
+                    }elseif($validateNurse['nurse']->session == $pending){
+                        //Retornamos el error: 
+                        return response(content: ['login' => false, 'Error' => 'Esta enfermera solicitó un restablecimiento de contraseña.'], status: 403);
+                    }
 
-        //                 //Realizamos una nueva consulta al controlador de 'Usuarios', para cargar el nuevo estado de sesion: 
-        //                 $user = $usersController->show(email: $request->input(key: 'email'));
-        //                 //Retornamos la respuesta: 
-        //                 return ['Login' => true, 'User' => $user['User']];
+                    break;
 
-        //             }elseif($validateUser['User']['sesion'] == $active){
-        //                 //Retornamos el error: 
-        //                 return ['Login' => false, 'Error' => 'Este usuario ya inicio sesion en el sistema.'];
+                    case $restorePassword: 
+
+                        //Si existe, extraemos su estado de sesion actual: 
+                        if($validateNurse['query']){
+                
+                            //Estado de sesion: 
+                            //-----------------
+                            //Sesion inactiva: 
+                            static $inactive = 'Inactiva';
+                            //Sesion activa: 
+                            static $active   = 'Activa';
+                            //Sesion pendiente: 
+                            static $pending  = 'Pendiente';
+                
+                            if ($validateNurse['nurse']->session == $inactive) {
+                
+                                try {
+                
+                                    //Realizamos la actualizacion del estado de la sesion: 
+                                    $response = $nursesController->updateSession(email: $request->input(key: 'email'),
+                                                                                session: $pending);
+
+                                    // Enviamos el correo de restablecimiento: 
+                                    $email = $nursesController->restorePassword(url: 'https://www.google.com',
+                                                                                email: $request->input(key: 'email'),
+                                                                                updated_at: $validateNurse['nurse']->updated_at,
+                                                                                sessionStatus: $inactive,
+                                                                                newPassword: $request->input('password'));
+                                    //Retornamos la respuesta: 
+                                    return response(content: $email, status: 204);
+
+                                } catch (Exception $e) {
+                                    //Retornamos el error: 
+                                    return response(content: ['restorePassword' => false, 'error' => $e->getMessage()], status: 500);
+                                }
+                                    
+                            } elseif ($validateNurse['nurse']->session == $pending) {
+                
+                                try {
+
+                                    //Realizamos la actualizacion del estado de la sesion: 
+                                    $response = $nursesController->updateSession(email: $request->input(key: 'email'),
+                                                                                session: $pending);
+                
+                                    //Realizamos la actualizacion del estado de la sesion: 
+                                    $email = $nursesController->restorePassword(url: $request->input('url'),
+                                                                                    email: $request->input(key: 'email'),
+                                                                                    updated_at: $validateNurse['nurse']->updated_at,
+                                                                                    sessionStatus: $pending, 
+                                                                                    newPassword: $request->input('password'));
+                                    //Retornamos la respuesta: 
+                                    return response(content: $email, status: 200);
+
+                                } catch (Exception $e) {
+                                    //Retornamos el error: 
+                                    return response(content: ['restorePassword' => false, 'error' => $e->getMessage()], status: 500);
+                                }
+
+                            } else {
+                
+                                try {
+                
+                                    //Realizamos la actualizacion del estado de la sesion: 
+                                    $response = $nursesController->updateSession(email: $request->input(key: 'email'),
+                                                                    session: $inactive);
+
+                                    //Realizamos la actualizacion del estado de la sesion: 
+                                    $email = $nursesController->restorePassword(url: $request->input('url'),
+                                                                                email: $request->input(key: 'email'),
+                                                                                updated_at: $validateNurse['nurse']->updated_at,
+                                                                                sessionStatus: $active, 
+                                                                                newPassword: $request->input('password'));
+
+                                    //Retornamos la respuesta: 
+                                    return response(content: $response, status: 204);
+
+                                } catch (Exception $e) {
+                                    //Retornamos el error: 
+                                    return response(content: ['restorePassword' => false, 'error' => $e->getMessage()], status: 500);
+                                }
+                            }
+                                    
+                        }else{
+                            //Retornamos el error: 
+                            return response(content: ['restorePassword' => false, 'error' => 'No existe esa enfermera en el sistema.'], status: 404);
+                        }
+                        break;
+
+                        case $closeLogin: 
                     
-        //             }elseif($validateUser['User']['sesion'] == $pending){
-        //                 //Retornamos el error: 
-        //                 return ['Login' => false, 'Error' => 'Este usuario solicitó un restablecimiento de contraseña.'];
-        //             }
-                  
-        //        }else{
-        //            //Retornamos el error: 
-        //            return ['Login' => false, 'Error' => 'No existe ese usuario en el sistema.'];
-        //        }
-        //         break;
+                            //Estado de sesion: 
+                            //-----------------
+                            //Sesion activa: 
+                            static $active   = 'Activa';
+                            //Sesion inactiva: 
+                            static $inactive = 'Inactiva';      
+                    
+                            if ($validateNurse['nurse']->session == $active) {
+                    
+                                try {
+                    
+                                    //Realizamos la actualizacion del estado de la sesion: 
+                                    $nursesController->updateSession(email: $request->input(key: 'email'),
+                                                                    session: $inactive);
 
-        //     case $restorePassword: 
+                                    //Retornamos la respuesta: 
+                                    return response(content: ['closeLogin' => true], status: 204);
 
-        //         //Si existe, extraemos su estado de sesion actual: 
-        //         if($validateUser['Query']){
+                                } catch (Exception $e) {
+                                    //Retornamos el error: 
+                                    return response(content:['closeLogin' => false, 'error' => $e->getMessage()], status: 500);
+                                }
 
-        //             $client = new ClassUsuario(
-        //                 password: $request->input(key: 'newPassword'),
-        //                 confirmPassword: $request->input(key: 'confirmPassword')
-        //             );
+                            } else {
+                                //Retornamos el error: 
+                                return response(content: ['closeLogin' => false, 'error' => 'El cliente no ha iniciado sesion en el sistema.'], status: 403);
+                            }
 
-        //             // $response = $client->restorePassword(
-        //             //     url: $request->input(key: 'url'),
-        //             //     user: $validateUser['User']['email'],
-        //             //     updated_at: $validateUser['User']['updated_at'],
-        //             //     sessionStatus: $validateUser['User']['sesion'],
-        //             //     newPassword: $request->input(key: 'newPassword')
-        //             // );
+                            break;
 
-        //             //Estado de sesion: 
-        //             //-----------------
-        //             //Sesion inactiva: 
-        //             static $inactive = 'Inactiva';
-        //             //Sesion activa: 
-        //             static $active   = 'Activa';
-        //             //Sesion pendiente: 
-        //             static $pending  = 'Pendiente';
+                        default:
+                                return response(content: ['error' => 'formulario no valido.'], status: 403);
+                                break;
+            }
 
-        //             if ($validateUser['User']['sesion'] == $inactive) {
-
-        //                 if ($response) {
-
-        //                     try {
-
-        //                         //Realizamos la actualizacion del estado de la sesion: 
-        //                         $usersController->updateSession(email: $request->input(key: 'email'),
-        //                                                         session: $pending);
-        //                         //Retornamos la respuesta: 
-        //                         return $response;
-        //                     } catch (Exception $e) {
-        //                         //Retornamos el error: 
-        //                         return ['restorePassword' => false, 'Error' => $e->getMessage()];
-        //                     }
-        //                 } else {
-        //                     //Retornamos el error:
-        //                     return $response;
-        //                 }
-        //             } elseif ($validateUser['User']['sesion'] == $pending) {
-
-        //                 if ($response['restorePassword']) {
-
-        //                     try {
-
-        //                         //Realizamos la actualizacion del estado de la sesion: 
-        //                         $usersController->restorePassword(email: $request->input(key: 'email'),
-        //                                                           session: $inactive, 
-        //                                                           newPassword: $response['newPassword']);
-        //                         //Retornamos la respuesta: 
-        //                         return $response;
-        //                     } catch (Exception $e) {
-        //                         //Retornamos el error: 
-        //                         return ['restorePassword' => false, 'Error' => $e->getMessage()];
-        //                     }
-        //                 } else {
-
-        //                     try {
-
-        //                         //Realizamos la actualizacion del estado de la sesion: 
-        //                         $usersController->updateSession(email: $request->input(key: 'email'),
-        //                                                         session: $inactive);
-        //                         //Retornamos el error: 
-        //                         return $response;
-        //                     } catch (Exception $e) {
-        //                         //Retornamos el error: 
-        //                         return ['restorePassword' => false, 'Error' => $e->getMessage()];
-        //                     }
-        //                 }
-        //             } else {
-        //                 //Retornamos el error:
-        //                 return $response;
-        //             }
-        //         }else{
-        //             //Retornamos el error: 
-        //             return ['Login' => false, 'Error' => 'No existe ese usuario en el sistema.'];
-        //         }
-        //         break;
-
-        //     case $closeLogin: 
-
-        //         $model = Usuario::where('email', $request->input(key: 'email'));
-
-        //         //Validamos que el usuario exista en la DB: 
-        //         $validate = $model->first();
-
-        //         if ($validate) {
-
-        //              //Estado de sesion: 
-        //             //-----------------
-        //             //Sesion activa: 
-        //             static $active   = 'Activa';
-        //             //Sesion inactiva: 
-        //             static $inactive = 'Inactiva';      
-
-        //             if ($validate['sesion'] == $active) {
-
-        //                 try {
-
-        //                     //Realizamos la actualizacion del estado de la sesion: 
-        //                     $usersController->updateSession(email: $request->input(key: 'email'),
-        //                                                     session: $inactive);
-        //                     //Retornamos la respuesta: 
-        //                     return ['closeLogin' => true];
-        //                 } catch (Exception $e) {
-        //                     //Retornamos el error: 
-        //                     return ['closeLogin' => false, 'Error' => $e->getMessage()];
-        //                 }
-        //             } else {
-        //                 //Retornamos el error: 
-        //                 return ['closeLogin' => false, 'Error' => 'El cliente no ha iniciado sesion en el sistema.'];
-        //             }
-        //         } else {
-        //             //Retornamos el error: 
-        //             return ['closeLogin' => false, 'Error' => 'No existe en el sistema.'];
-        //         }
-        //         break;
-
-        //         default:
-        //         return ['Error' => 'Formulario no valido.'];
-        //         break;
-        // }
+        }else{
+            // Retornamos el error:
+            return response(content: ['login' => false, 'error' => $validateNurse['error']], status: 404);
+        }
     }
 }

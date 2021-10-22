@@ -4,10 +4,13 @@ namespace App\Http\Controllers\admin_module;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Require\Class\Nurse as ClassNurse;
+use App\Mail\RestorePassword;
 use App\Models\Nurse;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class NurseController extends Controller
 {
@@ -175,7 +178,13 @@ class NurseController extends Controller
         $model = DB::table('nurses')
 
                 // Filtramos el usuario requerido: 
-                ->where('email', $email);
+                ->where('email', $email)
+
+                // Realizamos la consulta a la tabla del modelo 'Role: 
+                ->join('roles', 'roles.id_role', '=', 'nurses.role_id')
+
+                // Seleccionamos los campos que se requiren: 
+                ->select('nurses.id_nurse as id', 'nurses.identification', 'nurses.name', 'nurses.last_name', 'nurses.email', 'nurses.session',  'nurses.avatar', 'nurses.updated_at','roles.role_name as role');
 
         // Validamos que exista el registro en la tabla de la DB:
         $validateNurse = $model->first();
@@ -315,6 +324,64 @@ class NurseController extends Controller
             // Retornamos el error:
             return ['update' => false, 'error' => 'No existe esa enfermera en el sistema.'];
         }
+    }
+
+    //Metodo para restablecer contrasenia: 
+    public function restorePassword($url, $email, $updated_at, $sessionStatus, $newPassword)
+    {
+        //Estado de sesiones: 
+        static $inactive = 'Inactiva'; 
+        static $pending  = 'Pendiente';
+
+        //Validamos que el usuario no haya iniciado sesion o haya hecho una solicitud de restablecimiento con anterioridad: 
+        if($sessionStatus == $inactive){
+
+            try{
+
+                //Declaramos la ruta del cliente, a la cual se va redirigir el usuario: 
+                view('restorePassword');
+    
+                //Enviamos el correo de restablecimiento: 
+                $restorePassword = new RestorePassword(url: $url);
+                Mail::to($email)->send($restorePassword);
+
+                //Retornamos la respuesta: 
+                return ['restorePassword' => true];
+    
+            }catch(Exception $e){
+                //Retornamos el error: 
+                return ['restorePassword' => false, 'Error' => $e->getMessage()];
+            }
+
+        }elseif($sessionStatus == $pending){
+
+            //Fecha actual en la que se realiza la peticion: 
+            $currentDate = new DateTime;
+
+            //Fecha de expiracion para poder restablecer la contrasenia: 
+            $dateOfExpire = date('Y-m-d H:i:s', strtotime($updated_at.'+10 minutes'));
+
+            //Validamos si el usuario esta intentando restablecer la contrasenia, durante el tiempo permitido: 
+            if($currentDate->format('Y-m-d H:i:s') <= $dateOfExpire){
+
+                Nurse::where('email', $email)->update(['password' => bcrypt($newPassword)]);
+
+                //Retornamos la respuesta: 
+                return ['restorePassword' => true];
+
+            }elseif($currentDate->format('Y-m-d H:i:s') > $dateOfExpire){
+
+                //Retornamos el error: 
+                return ['restorePassword' => false, 'Error' => 'Ha excedido el tiempo limite de espera.'];
+
+            }
+
+        }else{
+
+            //Retornamos el error:
+            return ['restorePassword' => false, 'Error' => 'La enfermera ya inicio sesion en el sistema.'];
+        }
+
     }
 
     // Metodo para aniadir la URL del avatar de la enfermera: 
