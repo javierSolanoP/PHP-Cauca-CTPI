@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get(uri: '/stream-organization_chart', action: [OrganizationChartController::class, 'stream']);
 Route::get(uri: '/download-organization_chart', action: [OrganizationChartController::class, 'download']);
+Route::get(uri: '/qr-organization_chart', action: [OrganizationChartController::class, 'qrCode']);
